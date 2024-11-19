@@ -3,7 +3,7 @@ import { FaGithub, FaLinkedin, FaMedium, FaXTwitter } from "react-icons/fa6"
 
 const ProfilePicture = () => {
   return (
-    <img src="/self.png" alt="Profile picture of Payton" className="bg-gradient-to-br from-indigo-500 to-fuchsia-500 rounded-full w-[350px] md:w-2/5 p-3" />
+    <img src="/self.png" alt="Profile picture of Bidyadhar" className="bg-gradient-to-br from-indigo-500 to-fuchsia-500 rounded-full w-[350px] md:w-2/5 p-3" />
   )
 }
 
