@@ -4,7 +4,7 @@ import MobileNavDropdown from './MobileNavDropdown'
 
  const Logo = ({ className }: { className?: string }) => {
    return (
-     <img alt="home" src="home" className={`w-20 ${className}`} />
+     <h1 className={`w-20 ${className}`}>Home</h1>
    )
  }
 
