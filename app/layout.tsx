@@ -9,8 +9,8 @@ import { Analytics } from "@vercel/analytics/react"
 const nunito = Nunito({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Payton Pierce | Portfolio",
-  description: "Portfolio of Payton Pierce, frontend developer located in Wisconsin",
+  title: "Bidyadhar Sahu | Portfolio",
+  description: "Portfolio of Bidyadhar Sahu, Blockchain developer from India",
 };
 
 export default function RootLayout({
