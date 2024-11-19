@@ -4,7 +4,7 @@ import MobileNavDropdown from './MobileNavDropdown'
 
 const Logo = ({ className }: { className?: string }) => {
   return (
-    <img alt="logo" src="/home.png" className={`w-12 ${className}`} />
+    <img alt="logo" src="/home.png" className={`w-20 ${className}`} />
   )
 }
 
@@ -20,7 +20,7 @@ export const navLinks = [
     mobile: true
   },
   {
-    label: <Logo/>,
+    label: <Logo />,
     href: '/',
     mobile: false
   },
@@ -46,8 +46,9 @@ const Navbar = () => {
         </ul>
         {/* mobile */}
         <MobileNavDropdown />
+        <Link href="/"><Logo className="md:hidden" /></Link>
         <div className="md:hidden">
-        <DarkModeToggle />
+          <DarkModeToggle />
         </div>
       </div>
     </nav>
