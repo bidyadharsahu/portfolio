@@ -8,7 +8,7 @@ interface PromptProps {
     return (
       <p>
         <span className='text-violet-400 font-semibold'>
-          ~/paytonpierce{directory}
+          ~/bidyadhar{directory}
           <span className="text-success">{branch && " (main)"}</span> $
         </span> {content}</p>
     );
