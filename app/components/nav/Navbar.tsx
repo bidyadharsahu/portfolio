@@ -20,7 +20,7 @@ export const navLinks = [
     mobile: true
   },
   {
-    label: '<logo/>',
+    label: <logo/>,
     href: '/',
     mobile: false
   },
