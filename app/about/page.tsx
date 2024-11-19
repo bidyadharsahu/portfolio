@@ -14,8 +14,8 @@ const About = () => {
     <div className="space-y-10 my-10 break-words">
       {/* general bio */}
       <FakeTerminalWindow>
-        <Prompt content="cd aboutbidyadhar/" />
-        <Prompt directory="/aboutbidyadhar" branch={true} content="cat README.md" />
+        <Prompt content="cd about/" />
+        <Prompt directory="/about" branch={true} content="cat README.md" />
         <p>Hello there! I'm Bidyadhar, a cloud developer from India, passionate about leveraging cutting-edge technologies like AWS and blockchain to build innovative solutions I specialize in cloud development and have a strong interest in blockchain.With a knack for adaptability and a keen eye for detail, I am always looking to expand my skill set. While I am proficient in Python, Solidity, and working with AWS services, I am actively exploring Chainlink, Remix, and other tools to enhance my blockchain expertise. I enjoy crafting solutions that make a tangible impact, like my recent healthcare app for rural communities and blockchain-based carpooling system.</p>
       </FakeTerminalWindow>
 
