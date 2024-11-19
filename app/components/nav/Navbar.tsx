@@ -2,11 +2,11 @@ import Link from 'next/link'
 import DarkModeToggle from '../DarkModeToggle'
 import MobileNavDropdown from './MobileNavDropdown'
 
- const Logo = () => {
-   return (
-     <h1 className="w-20">Home</h1>
-   )
- }
+const Logo = ({ className }: { className?: string }) => {
+  return (
+    <img alt="logo" src="/home.png" className={`w-20 ${className}`} />
+  )
+}
 
 export const navLinks = [
   {
