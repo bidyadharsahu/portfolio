@@ -1,9 +1,9 @@
 export const skills = {
-  theObvious: [
+  technology: [
     'HTML', 'CSS', 'JavaScript', 'Python', 'git', 'oracle', 'Solidity', 'APIs'
   ],
   
-  toolsOfTheTrade: [
+  tools: [
     'AWS Lambda', 'DynamoDB', 'Amplify', 'Cognito', 'Node.js', 'Remix', 'Chainlink'
   ]
 };
