@@ -25,8 +25,8 @@ const About = () => {
         <Prompt directory='/skillsAndTools/Proficient' branch={true} content="ls" />
         <div className='flex justify-start flex-wrap md:justify-between'>
           <ul>
-            <SkillList title="TheObvious" items={skills.theObvious} />
-            <SkillList title="ToolsOfTheTrade" items={skills.toolsOfTheTrade} />
+            <SkillList title="technology" items={skills.theObvious} />
+            <SkillList title="tools" items={skills.toolsOfTheTrade} />
           </ul>
         </div>
       </FakeTerminalWindow>
