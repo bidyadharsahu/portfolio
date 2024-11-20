@@ -3,9 +3,10 @@ import React from 'react'
 
 const projects = [
   {
-    title: '',
-    mockup: '',
-    
+    title: 'Alarm Clock',
+    mockup: '/mockups/clockMock.png',
+    live: '', 
+    code: ''
   },
  
 ]
