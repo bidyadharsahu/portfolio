@@ -3,17 +3,12 @@ import React from 'react'
 
 const projects = [
   {
-    title: 'Alarm Clock',
-    mockup: '/mockups/clockMock.png',
-    live: 'https://darkmodeclock.paytonpierce.dev/', 
-    code: ''
+    title: '',
+    mockup: '',
+    // live: '', 
+    // code: ''
   },
-  {
-    title: 'To-Do List',
-    mockup: '/mockups/todoMock.png',
-    live: 'https://todolist.paytonpierce.dev/',
-    code: ''
-  },
+ 
 ]
 
 const Portfolio = () => {
@@ -27,8 +22,8 @@ const Portfolio = () => {
           <img src={project.mockup} />
           <h1 className="text-3xl mb-2">{project.title}</h1>
           <div className="flex gap-2">
-            <Link href={project.live} target='_blank' className="btn btn-secondary">Live</Link>
-            <Link href={project.code} target='_blank' className="btn btn-primary">Source</Link>
+{/*             <Link href={project.live} target='_blank' className="btn btn-secondary">Live</Link>
+            <Link href={project.code} target='_blank' className="btn btn-primary">Source</Link> */}
           </div>
         </div>
       ))}
