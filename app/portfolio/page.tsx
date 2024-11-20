@@ -5,8 +5,7 @@ const projects = [
   {
     title: '',
     mockup: '',
-    //live: '', 
-   //code: ''
+    
   },
  
 ]
