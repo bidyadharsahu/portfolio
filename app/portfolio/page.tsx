@@ -2,18 +2,13 @@ import Link from 'next/link'
 import React from 'react'
 
 const projects = [
-  {
-    title: 'Alarm Clock',
-    mockup: '/mockups/clockMock.png',
-    live: 'https://darkmodeclock.paytonpierce.dev/', 
-    code: ''
-  },
-  {
-    title: 'To-Do List',
-    mockup: '/mockups/todoMock.png',
-    live: 'https://todolist.paytonpierce.dev/',
-    code: ''
-  },
+  //{
+    //title: 'Alarm Clock',
+   // mockup: '/mockups/clockMock.png',
+   // live: 'https://darkmodeclock.paytonpierce.dev/', 
+   // code: ''
+  //},
+ 
 ]
 
 const Portfolio = () => {
