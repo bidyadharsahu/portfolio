@@ -28,7 +28,7 @@ const certifications: Certification[] = [
   },
 ];
 
-const Cert = () => {
+const Blog = () => {
   return (
     <div className="space-y-6 my-10 px-6">
       <h1 className="text-2xl font-bold mb-6">My Certifications</h1>
