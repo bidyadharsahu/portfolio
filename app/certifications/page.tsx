@@ -28,7 +28,7 @@ const certifications: Certification[] = [
   },
 ];
 
-const Blog = () => {
+const Certifications = () => {
   return (
     <div className="space-y-6 my-10 px-6">
       <h1 className="text-2xl font-bold mb-6">My Certifications</h1>
@@ -49,7 +49,7 @@ const Blog = () => {
                 rel="noopener noreferrer"
                 className="text-blue-500 underline mt-2 inline-block"
               >
-                View Certification
+                View Certifications
               </a>
             )}
           </li>
