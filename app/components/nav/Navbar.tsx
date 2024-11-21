@@ -28,7 +28,12 @@ export const navLinks = [
     label: 'blog',
     href: '/blog',
     mobile: true
-  }
+  },
+  {
+    label: 'Certification', // New Certification Page Link
+    href: '/Certification', // Link to the Certification page
+    mobile: true,
+  },
 ]
 
 const Navbar = () => {
