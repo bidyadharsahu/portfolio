@@ -49,7 +49,7 @@ export default function Home() {
           <h1 className="text-5xl">
             Hi, I'm <span className="bg-gradient-to-tl from-indigo-500 to-fuchsia-500 text-transparent bg-clip-text font-bold">Bidyadhar</span><WavingHand />
           </h1>
-          <h2 className="text-3xl">I'm a Cloud developer.</h2>
+          <h2 className="text-3xl">I'm a Blockchain developer.</h2>
         </div>
         <BulletPoints />
         {/* socials */}
