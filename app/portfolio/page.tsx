@@ -5,8 +5,8 @@ const projects = [
   {
     title: '',
     mockup: '',
-    // live: '', 
-    // code: ''
+     live: '', 
+     code: ''
   },
  
 ]
@@ -14,7 +14,7 @@ const projects = [
 const Portfolio = () => {
   return (
     <div className="text-center">
-{/*       <p>Open Source Contributions:</p>
+{       <p>Open Source Contributions:</p>
       <Link className="link link-primary" href="https://github.com/danielcranney/profileme-dev/pull/34">ProfileMe.dev</Link> */}
       <div className="flex flex-wrap items-start mb-10">
       {projects.map((project, index) => (
@@ -22,7 +22,7 @@ const Portfolio = () => {
           <img src={project.mockup} />
           <h1 className="text-3xl mb-2">{project.title}</h1>
           <div className="flex gap-2">
-{/*             <Link href={project.live} target='_blank' className="btn btn-secondary">Live</Link>
+{             <Link href={project.live} target='_blank' className="btn btn-secondary">Live</Link>
             <Link href={project.code} target='_blank' className="btn btn-primary">Source</Link> */}
           </div>
         </div>
