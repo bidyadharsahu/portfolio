@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { FaGithub, FaLinkedin, FaMedium, FaXTwitter } from "react-icons/fa6"
+import { FaGithub, FaLinkedin, FaMedium } from "react-icons/fa6"
 
 const ProfilePicture = () => {
   return (
@@ -41,9 +41,7 @@ const socials = [
 export default function Home() {
   return (
     <div className="flex flex-col md:flex-row justify-center items-center gap-10 md:gap-20">
-      {/* picture of me */}
       <ProfilePicture />
-      {/* little bio */}
       <div>
         <div className="text-center md:text-left mb-4">
           <h1 className="text-5xl">
@@ -52,7 +50,6 @@ export default function Home() {
           <h2 className="text-3xl">I'm a Blockchain developer.</h2>
         </div>
         <BulletPoints />
-        {/* socials */}
         <ul className="flex justify-center text-3xl gap-10 mt-4">
           {socials.map((social, index) => (
             <li key={index} className="hover:scale-125 hover:text-white transition-all ease-in-out"><Link href={social.href} target="_blank">{social.icon}</Link></li>
