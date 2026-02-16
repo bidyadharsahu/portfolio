@@ -48,7 +48,7 @@ export async function POST(request: NextRequest) {
       .from('users')
       .select('*')
       .eq('username', username)
-      .eq('password_hash', password) // In production, use proper hashing
+      .eq('password', password) // In production, use proper hashing
       .single();
 
     if (error || !user) {

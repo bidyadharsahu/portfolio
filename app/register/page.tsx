@@ -83,7 +83,7 @@ export default function RegisterPage() {
             </div>
             <h1 className="text-2xl font-bold">{t('auth.register', locale)}</h1>
             <p className="text-base-content/50 text-sm">
-              {step === 1 ? 'Create your credentials' : 'Tell us about yourself'}
+              {step === 1 ? t('auth.step1', locale) : t('auth.step2', locale)}
             </p>
             {/* Progress */}
             <div className="flex gap-2 justify-center pt-2">
@@ -98,14 +98,14 @@ export default function RegisterPage() {
                 <label className="text-sm font-medium mb-1.5 block">{t('auth.username', locale)} *</label>
                 <div className="relative">
                   <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-base-content/40" />
-                  <input type="text" value={form.username} onChange={(e) => updateForm('username', e.target.value)} placeholder="Choose a username" className="input input-bordered w-full pl-10" />
+                  <input type="text" value={form.username} onChange={(e) => updateForm('username', e.target.value)} placeholder={t('placeholder.username', locale)} className="input input-bordered w-full pl-10" />
                 </div>
               </div>
               <div>
                 <label className="text-sm font-medium mb-1.5 block">{t('auth.password', locale)} *</label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-base-content/40" />
-                  <input type={showPassword ? 'text' : 'password'} value={form.password} onChange={(e) => updateForm('password', e.target.value)} placeholder="Create a password" className="input input-bordered w-full pl-10 pr-10" />
+                  <input type={showPassword ? 'text' : 'password'} value={form.password} onChange={(e) => updateForm('password', e.target.value)} placeholder={t('placeholder.createPassword', locale)} className="input input-bordered w-full pl-10 pr-10" />
                   <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-base-content/40">
                     {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
@@ -115,10 +115,10 @@ export default function RegisterPage() {
                 <label className="text-sm font-medium mb-1.5 block">{t('auth.confirmPassword', locale)} *</label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-base-content/40" />
-                  <input type="password" value={form.confirmPassword} onChange={(e) => updateForm('confirmPassword', e.target.value)} placeholder="Confirm password" className="input input-bordered w-full pl-10" />
+                  <input type="password" value={form.confirmPassword} onChange={(e) => updateForm('confirmPassword', e.target.value)} placeholder={t('placeholder.confirmPassword', locale)} className="input input-bordered w-full pl-10" />
                 </div>
               </div>
-              <button onClick={handleStep1} className="btn btn-primary w-full text-white">Next Step →</button>
+              <button onClick={handleStep1} className="btn btn-primary w-full text-white">{t('auth.nextStep', locale)}</button>
             </div>
           ) : (
             <form onSubmit={handleRegister} className="space-y-4">
@@ -126,39 +126,39 @@ export default function RegisterPage() {
                 <label className="text-sm font-medium mb-1.5 block">{t('auth.fullName', locale)} *</label>
                 <div className="relative">
                   <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-base-content/40" />
-                  <input type="text" value={form.full_name} onChange={(e) => updateForm('full_name', e.target.value)} placeholder="Your full name" className="input input-bordered w-full pl-10" />
+                  <input type="text" value={form.full_name} onChange={(e) => updateForm('full_name', e.target.value)} placeholder={t('placeholder.fullName', locale)} className="input input-bordered w-full pl-10" />
                 </div>
               </div>
               <div>
                 <label className="text-sm font-medium mb-1.5 block">{t('auth.phone', locale)}</label>
                 <div className="relative">
                   <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-base-content/40" />
-                  <input type="tel" value={form.phone} onChange={(e) => updateForm('phone', e.target.value)} placeholder="Phone number" className="input input-bordered w-full pl-10" />
+                  <input type="tel" value={form.phone} onChange={(e) => updateForm('phone', e.target.value)} placeholder={t('placeholder.phone', locale)} className="input input-bordered w-full pl-10" />
                 </div>
               </div>
               <div>
                 <label className="text-sm font-medium mb-1.5 block">{t('auth.email', locale)}</label>
                 <div className="relative">
                   <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-base-content/40" />
-                  <input type="email" value={form.email} onChange={(e) => updateForm('email', e.target.value)} placeholder="Email address" className="input input-bordered w-full pl-10" />
+                  <input type="email" value={form.email} onChange={(e) => updateForm('email', e.target.value)} placeholder={t('placeholder.email', locale)} className="input input-bordered w-full pl-10" />
                 </div>
               </div>
               <div>
                 <label className="text-sm font-medium mb-1.5 block">{t('auth.location', locale)}</label>
                 <div className="relative">
                   <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-base-content/40" />
-                  <input type="text" value={form.location} onChange={(e) => updateForm('location', e.target.value)} placeholder="Your location" className="input input-bordered w-full pl-10" />
+                  <input type="text" value={form.location} onChange={(e) => updateForm('location', e.target.value)} placeholder={t('placeholder.location', locale)} className="input input-bordered w-full pl-10" />
                 </div>
               </div>
               <div>
                 <label className="text-sm font-medium mb-1.5 block">{t('auth.purpose', locale)}</label>
                 <div className="relative">
                   <FileText className="absolute left-3 top-3 w-4 h-4 text-base-content/40" />
-                  <textarea value={form.purpose} onChange={(e) => updateForm('purpose', e.target.value)} placeholder="Why are you visiting? (e.g., looking for a developer, interested in meditation classes, exploring projects...)" className="textarea textarea-bordered w-full pl-10 min-h-[80px]" />
+                  <textarea value={form.purpose} onChange={(e) => updateForm('purpose', e.target.value)} placeholder={t('placeholder.purpose', locale)} className="textarea textarea-bordered w-full pl-10 min-h-[80px]" />
                 </div>
               </div>
               <div className="flex gap-2">
-                <button type="button" onClick={() => setStep(1)} className="btn btn-ghost flex-1">← Back</button>
+                <button type="button" onClick={() => setStep(1)} className="btn btn-ghost flex-1">{t('auth.back', locale)}</button>
                 <button type="submit" disabled={loading} className="btn btn-primary text-white flex-1 gap-2">
                   {loading ? <span className="loading loading-spinner loading-sm"></span> : <UserPlus className="w-4 h-4" />}
                   {t('auth.registerBtn', locale)}

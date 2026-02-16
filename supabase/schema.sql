@@ -281,3 +281,12 @@ FOR EACH ROW EXECUTE FUNCTION update_updated_at();
 INSERT INTO users (username, password, role, full_name, email)
 VALUES ('hello', '123456', 'admin', 'Bidyadhar', 'admin@bidyadhar.dev')
 ON CONFLICT (username) DO NOTHING;
+
+-- ====================================================================
+-- ENABLE REALTIME on key tables
+-- ====================================================================
+ALTER PUBLICATION supabase_realtime ADD TABLE donations;
+ALTER PUBLICATION supabase_realtime ADD TABLE feedback;
+ALTER PUBLICATION supabase_realtime ADD TABLE users;
+ALTER PUBLICATION supabase_realtime ADD TABLE projects;
+ALTER PUBLICATION supabase_realtime ADD TABLE calendar_events;

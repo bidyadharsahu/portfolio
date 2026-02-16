@@ -10,29 +10,17 @@ import {
   TrendingUp, DollarSign, Star, Clock, X, Save,
 } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { createClient } from '@/lib/supabase/client';
 
 type Tab = 'overview' | 'projects' | 'customers' | 'feedback' | 'events' | 'donations' | 'streams' | 'classes';
 
-// Sample CRM data
+// Sample CRM data (customers kept as sample, donations/feedback now realtime)
 const sampleCustomers = [
   { id: '1', username: 'rajesh_k', full_name: 'Rajesh Kumar', email: 'rajesh@example.com', phone: '+91 9876543210', location: 'Mumbai', purpose: 'Need a blockchain solution for supply chain', status: 'active', created_at: '2026-01-10' },
   { id: '2', username: 'priya_s', full_name: 'Priya Sharma', email: 'priya@example.com', phone: '+91 8765432109', location: 'Delhi', purpose: 'QR menu system for my restaurant chain', status: 'active', created_at: '2026-01-15' },
   { id: '3', username: 'amit_p', full_name: 'Amit Patel', email: 'amit@example.com', phone: '+91 7654321098', location: 'Bangalore', purpose: 'Smart contract audit for our DeFi platform', status: 'completed', created_at: '2025-12-20' },
   { id: '4', username: 'sneha_r', full_name: 'Sneha Reddy', email: 'sneha@example.com', phone: '+91 6543210987', location: 'Hyderabad', purpose: 'AR app for real estate showcase', status: 'lead', created_at: '2026-02-01' },
   { id: '5', username: 'vikram_m', full_name: 'Vikram Mishra', email: 'vikram@example.com', phone: '+91 5432109876', location: 'Pune', purpose: 'Full portfolio website like yours', status: 'lead', created_at: '2026-02-12' },
-];
-
-const sampleFeedbackData = [
-  { id: '1', name: 'Rajesh K.', website_rating: 5, work_rating: 5, message: 'Innovative portfolio design! Love the multilingual support.', created_at: '2026-01-15' },
-  { id: '2', name: 'Priya S.', website_rating: 4, work_rating: 5, message: 'QR menu project was delivered perfectly on time.', created_at: '2026-01-20' },
-  { id: '3', name: 'Anonymous', website_rating: 5, work_rating: 5, message: 'Best developer portfolio I\'ve seen. The meditation section is unique!', created_at: '2026-02-01' },
-  { id: '4', name: 'Sneha R.', website_rating: 5, work_rating: 4, message: 'Very professional look. The chatbot is helpful!', created_at: '2026-02-10' },
-];
-
-const sampleDonations = [
-  { id: '1', donor_name: 'Anonymous', amount: 1000, message: 'Keep up the great work!', created_at: '2026-01-25' },
-  { id: '2', donor_name: 'Rajesh Kumar', amount: 5000, message: 'Supporting open source', created_at: '2026-02-05' },
-  { id: '3', donor_name: 'Tech Community', amount: 2500, message: 'For the meditation platform', created_at: '2026-02-10' },
 ];
 
 export default function AdminDashboard() {
@@ -43,10 +31,74 @@ export default function AdminDashboard() {
   const [customerFilter, setCustomerFilter] = useState('all');
   const [showAddProject, setShowAddProject] = useState(false);
 
+  // Realtime state
+  const [donations, setDonations] = useState<any[]>([]);
+  const [feedbackData, setFeedbackData] = useState<any[]>([]);
+  const [customers, setCustomers] = useState<any[]>(sampleCustomers);
+
   useEffect(() => {
     if (!user || user.role !== 'admin') {
       router.push('/login');
+      return;
     }
+
+    const supabase = createClient();
+
+    // Fetch donations
+    supabase.from('donations').select('*').order('created_at', { ascending: false }).then(({ data }) => {
+      if (data) setDonations(data);
+    });
+
+    // Fetch feedback
+    supabase.from('feedback').select('*').order('created_at', { ascending: false }).then(({ data }) => {
+      if (data) setFeedbackData(data);
+    });
+
+    // Fetch customers
+    supabase.from('users').select('*').neq('role', 'admin').order('created_at', { ascending: false }).then(({ data }) => {
+      if (data && data.length > 0) setCustomers(data);
+    });
+
+    // Realtime: donations
+    const donCh = supabase.channel('admin-donations').on(
+      'postgres_changes', { event: '*', schema: 'public', table: 'donations' },
+      (payload) => {
+        if (payload.eventType === 'INSERT') {
+          setDonations((prev) => [payload.new, ...prev]);
+          toast.success(`New donation: ₹${(payload.new as any).amount} from ${(payload.new as any).donor_name}`);
+        } else if (payload.eventType === 'DELETE') {
+          setDonations((prev) => prev.filter((d) => d.id !== (payload.old as any).id));
+        }
+      }
+    ).subscribe();
+
+    // Realtime: feedback
+    const fbCh = supabase.channel('admin-feedback').on(
+      'postgres_changes', { event: '*', schema: 'public', table: 'feedback' },
+      (payload) => {
+        if (payload.eventType === 'INSERT') {
+          setFeedbackData((prev) => [payload.new, ...prev]);
+          toast.success(`New feedback from ${(payload.new as any).name}`);
+        }
+      }
+    ).subscribe();
+
+    // Realtime: users
+    const userCh = supabase.channel('admin-users').on(
+      'postgres_changes', { event: '*', schema: 'public', table: 'users' },
+      (payload) => {
+        if (payload.eventType === 'INSERT') {
+          setCustomers((prev) => [payload.new, ...prev]);
+          toast.success(`New user registered: ${(payload.new as any).full_name || (payload.new as any).username}`);
+        }
+      }
+    ).subscribe();
+
+    return () => {
+      supabase.removeChannel(donCh);
+      supabase.removeChannel(fbCh);
+      supabase.removeChannel(userCh);
+    };
   }, [user, router]);
 
   if (!user || user.role !== 'admin') return null;
@@ -62,13 +114,16 @@ export default function AdminDashboard() {
     { key: 'classes', icon: <Flower2 className="w-4 h-4" />, label: t('dashboard.admin.classes', locale) },
   ];
 
-  const filteredCustomers = sampleCustomers.filter((c) => {
-    const matchesSearch = c.full_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      c.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      c.purpose.toLowerCase().includes(searchQuery.toLowerCase());
+  const filteredCustomers = customers.filter((c) => {
+    const matchesSearch = (c.full_name || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (c.email || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (c.purpose || '').toLowerCase().includes(searchQuery.toLowerCase());
     const matchesFilter = customerFilter === 'all' || c.status === customerFilter;
     return matchesSearch && matchesFilter;
   });
+
+  const totalDonations = donations.reduce((sum, d) => sum + (d.amount || 0), 0);
+  const avgRating = feedbackData.length > 0 ? (feedbackData.reduce((s, f) => s + (f.website_rating || 0), 0) / feedbackData.length).toFixed(1) : '—';
 
   return (
     <div className="min-h-screen bg-base-200/30">
@@ -117,10 +172,10 @@ export default function AdminDashboard() {
                 {/* Stats Cards */}
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                   {[
-                    { label: 'Total Projects', value: '6', icon: <FolderKanban className="w-5 h-5" />, color: 'text-blue-500 bg-blue-500/10', change: '+2 this month' },
-                    { label: 'Customers', value: '5', icon: <Users className="w-5 h-5" />, color: 'text-emerald-500 bg-emerald-500/10', change: '+3 new leads' },
-                    { label: 'Total Donations', value: '₹8,500', icon: <Gift className="w-5 h-5" />, color: 'text-amber-500 bg-amber-500/10', change: '+₹2,500 this month' },
-                    { label: 'Avg. Rating', value: '4.8', icon: <Star className="w-5 h-5" />, color: 'text-purple-500 bg-purple-500/10', change: 'Based on 4 reviews' },
+                    { label: 'Total Projects', value: '4', icon: <FolderKanban className="w-5 h-5" />, color: 'text-blue-500 bg-blue-500/10', change: 'Active projects' },
+                    { label: 'Customers', value: String(customers.length), icon: <Users className="w-5 h-5" />, color: 'text-emerald-500 bg-emerald-500/10', change: 'Realtime synced' },
+                    { label: 'Total Donations', value: `₹${totalDonations.toLocaleString()}`, icon: <Gift className="w-5 h-5" />, color: 'text-amber-500 bg-amber-500/10', change: `${donations.length} supporters` },
+                    { label: 'Avg. Rating', value: String(avgRating), icon: <Star className="w-5 h-5" />, color: 'text-purple-500 bg-purple-500/10', change: `Based on ${feedbackData.length} reviews` },
                   ].map((stat, i) => (
                     <div key={i} className="glass-card p-5">
                       <div className={`w-10 h-10 rounded-xl ${stat.color} flex items-center justify-center mb-3`}>{stat.icon}</div>
@@ -314,9 +369,12 @@ export default function AdminDashboard() {
             {/* FEEDBACK */}
             {activeTab === 'feedback' && (
               <div className="space-y-6">
-                <h2 className="text-xl font-bold">{t('dashboard.admin.feedback', locale)}</h2>
+                <h2 className="text-xl font-bold flex items-center gap-2">{t('dashboard.admin.feedback', locale)} <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" title="Live"></span></h2>
+                {feedbackData.length === 0 ? (
+                  <div className="glass-card p-12 text-center"><MessageSquare className="w-12 h-12 text-base-content/20 mx-auto mb-3" /><p className="text-base-content/50">No feedback yet</p></div>
+                ) : (
                 <div className="grid gap-4">
-                  {sampleFeedbackData.map((fb) => (
+                  {feedbackData.map((fb) => (
                     <div key={fb.id} className="glass-card p-5 flex items-start gap-4">
                       <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white text-sm font-bold flex-shrink-0">
                         {fb.name[0]}
@@ -335,13 +393,14 @@ export default function AdminDashboard() {
                         </div>
                         <p className="text-sm text-base-content/70 mt-2">"{fb.message}"</p>
                         <div className="flex gap-3 mt-2 text-xs text-base-content/50">
-                          <span>Website: {fb.website_rating}/5</span>
-                          <span>Work: {fb.work_rating}/5</span>
+                          <span>Website: {fb.website_rating || '—'}/5</span>
+                          <span>Work: {fb.work_rating || '—'}/5</span>
                         </div>
                       </div>
                     </div>
                   ))}
                 </div>
+                )}
               </div>
             )}
 
@@ -349,14 +408,17 @@ export default function AdminDashboard() {
             {activeTab === 'donations' && (
               <div className="space-y-6">
                 <div className="flex items-center justify-between">
-                  <h2 className="text-xl font-bold">{t('dashboard.admin.donations', locale)}</h2>
+                  <h2 className="text-xl font-bold flex items-center gap-2">{t('dashboard.admin.donations', locale)} <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" title="Live"></span></h2>
                   <div className="text-right">
-                    <p className="text-2xl font-bold text-primary">₹{sampleDonations.reduce((sum, d) => sum + d.amount, 0).toLocaleString()}</p>
-                    <p className="text-xs text-base-content/50">Total donations</p>
+                    <p className="text-2xl font-bold text-primary">₹{totalDonations.toLocaleString()}</p>
+                    <p className="text-xs text-base-content/50">{donations.length} donations</p>
                   </div>
                 </div>
+                {donations.length === 0 ? (
+                  <div className="glass-card p-12 text-center"><Gift className="w-12 h-12 text-base-content/20 mx-auto mb-3" /><p className="text-base-content/50">No donations yet</p></div>
+                ) : (
                 <div className="grid gap-4">
-                  {sampleDonations.map((donation) => (
+                  {donations.map((donation) => (
                     <div key={donation.id} className="glass-card p-5 flex items-center justify-between">
                       <div className="flex items-center gap-4">
                         <div className="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-500">
@@ -364,16 +426,17 @@ export default function AdminDashboard() {
                         </div>
                         <div>
                           <p className="font-semibold text-sm">{donation.donor_name}</p>
-                          <p className="text-xs text-base-content/50">{donation.message}</p>
+                          <p className="text-xs text-base-content/50">{donation.message || '—'}</p>
                         </div>
                       </div>
                       <div className="text-right">
-                        <p className="font-bold text-lg text-primary">₹{donation.amount.toLocaleString()}</p>
+                        <p className="font-bold text-lg text-primary">₹{(donation.amount || 0).toLocaleString()}</p>
                         <p className="text-xs text-base-content/40">{new Date(donation.created_at).toLocaleDateString('en-IN', { dateStyle: 'short' })}</p>
                       </div>
                     </div>
                   ))}
                 </div>
+                )}
               </div>
             )}
 

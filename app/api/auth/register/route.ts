@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
       .from('users')
       .insert({
         username,
-        password_hash: password, // In production, hash this
+        password, // In production, hash this
         role: 'customer',
         full_name: full_name || '',
         phone: phone || '',

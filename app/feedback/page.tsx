@@ -1,10 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAppStore } from '@/lib/store';
 import { t } from '@/lib/i18n';
 import { Star, MessageSquare, Send, ThumbsUp } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { createClient } from '@/lib/supabase/client';
 
 const StarRating = ({ value, onChange, label }: { value: number; onChange: (v: number) => void; label: string }) => {
   const [hover, setHover] = useState(0);
@@ -36,13 +37,6 @@ const StarRating = ({ value, onChange, label }: { value: number; onChange: (v: n
   );
 };
 
-const existingFeedback = [
-  { name: 'Rajesh K.', websiteRating: 5, workRating: 5, message: 'Absolutely stunning portfolio! The design is modern and the multilingual support is impressive.', date: '2026-01-15' },
-  { name: 'Priya S.', websiteRating: 4, workRating: 5, message: 'Great work on the QR menu system. The live preview feature is very innovative!', date: '2026-01-20' },
-  { name: 'Amit P.', websiteRating: 5, workRating: 5, message: 'One of the best developer portfolios I\'ve seen. Love the meditation section!', date: '2026-02-01' },
-  { name: 'Sneha R.', websiteRating: 5, workRating: 4, message: 'Very professional and well-organized. The chatbot is a nice touch!', date: '2026-02-10' },
-];
-
 export default function FeedbackPage() {
   const { locale } = useAppStore();
   const [websiteRating, setWebsiteRating] = useState(0);
@@ -50,8 +44,27 @@ export default function FeedbackPage() {
   const [message, setMessage] = useState('');
   const [name, setName] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [feedbackList, setFeedbackList] = useState<any[]>([]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+    const supabase = createClient();
+
+    supabase.from('feedback').select('*').order('created_at', { ascending: false }).limit(20).then(({ data }) => {
+      if (data) setFeedbackList(data);
+    });
+
+    const channel = supabase.channel('feedback-realtime').on(
+      'postgres_changes', { event: 'INSERT', schema: 'public', table: 'feedback' },
+      (payload) => {
+        setFeedbackList((prev) => [payload.new, ...prev].slice(0, 20));
+      }
+    ).subscribe();
+
+    return () => { supabase.removeChannel(channel); };
+  }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!websiteRating || !workRating) {
       toast.error('Please provide both ratings');
@@ -61,7 +74,21 @@ export default function FeedbackPage() {
       toast.error('Please enter your name');
       return;
     }
+    setSaving(true);
+    try {
+      const supabase = createClient();
+      const { error } = await supabase.from('feedback').insert({
+        name: name.trim(),
+        website_rating: websiteRating,
+        work_rating: workRating,
+        message: message.trim() || null,
+      });
+      if (error) throw error;
+    } catch (err) {
+      console.error(err);
+    }
     setSubmitted(true);
+    setSaving(false);
     toast.success(t('feedback.thanks', locale));
   };
 
@@ -121,8 +148,8 @@ export default function FeedbackPage() {
                   />
                 </div>
 
-                <button type="submit" className="btn btn-primary w-full text-white gap-2">
-                  <Send className="w-4 h-4" /> {t('feedback.submit', locale)}
+                <button type="submit" disabled={saving} className="btn btn-primary w-full text-white gap-2">
+                  {saving ? <span className="loading loading-spinner loading-sm"></span> : <Send className="w-4 h-4" />} {t('feedback.submit', locale)}
                 </button>
               </form>
             )}
@@ -130,30 +157,35 @@ export default function FeedbackPage() {
 
           {/* Existing Feedback */}
           <div>
-            <h2 className="text-2xl font-bold mb-6">What Others Say</h2>
+            <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">What Others Say <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" title="Live"></span></h2>
             <div className="space-y-4">
-              {existingFeedback.map((fb, i) => (
-                <div key={i} className="glass-card p-6 space-y-3">
+              {feedbackList.length === 0 ? (
+                <div className="glass-card p-8 text-center">
+                  <MessageSquare className="w-10 h-10 text-base-content/20 mx-auto mb-2" />
+                  <p className="text-sm text-base-content/50">Be the first to leave feedback!</p>
+                </div>
+              ) : feedbackList.map((fb) => (
+                <div key={fb.id} className="glass-card p-6 space-y-3">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white text-sm font-bold">
-                        {fb.name[0]}
+                        {(fb.name || '?')[0]}
                       </div>
                       <div>
                         <p className="font-semibold text-sm">{fb.name}</p>
-                        <p className="text-xs text-base-content/50">{new Date(fb.date).toLocaleDateString('en-IN', { dateStyle: 'medium' })}</p>
+                        <p className="text-xs text-base-content/50">{new Date(fb.created_at).toLocaleDateString('en-IN', { dateStyle: 'medium' })}</p>
                       </div>
                     </div>
                     <div className="flex gap-0.5">
                       {[...Array(5)].map((_, j) => (
-                        <Star key={j} className={`w-3.5 h-3.5 ${j < fb.websiteRating ? 'text-amber-400 fill-amber-400' : 'text-base-300'}`} />
+                        <Star key={j} className={`w-3.5 h-3.5 ${j < (fb.website_rating || 0) ? 'text-amber-400 fill-amber-400' : 'text-base-300'}`} />
                       ))}
                     </div>
                   </div>
-                  <p className="text-sm text-base-content/70 leading-relaxed">"{fb.message}"</p>
+                  {fb.message && <p className="text-sm text-base-content/70 leading-relaxed">"{fb.message}"</p>}
                   <div className="flex gap-4 text-xs text-base-content/50">
-                    <span>Website: {fb.websiteRating}/5</span>
-                    <span>Work: {fb.workRating}/5</span>
+                    <span>Website: {fb.website_rating || '—'}/5</span>
+                    <span>Work: {fb.work_rating || '—'}/5</span>
                   </div>
                 </div>
               ))}

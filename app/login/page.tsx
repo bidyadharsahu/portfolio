@@ -51,11 +51,8 @@ export default function LoginPage() {
         <div className="glass-card p-8 space-y-8">
           {/* Header */}
           <div className="text-center space-y-2">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white mx-auto mb-4">
-              <LogIn className="w-8 h-8" />
-            </div>
             <h1 className="text-2xl font-bold">{t('auth.login', locale)}</h1>
-            <p className="text-base-content/50 text-sm">Welcome back! Sign in to your account</p>
+            <p className="text-base-content/50 text-sm">{t('auth.welcome', locale)}</p>
           </div>
 
           <form onSubmit={handleLogin} className="space-y-5">
@@ -67,7 +64,7 @@ export default function LoginPage() {
                   type="text"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  placeholder="Enter your username"
+                  placeholder={t('placeholder.username', locale)}
                   className="input input-bordered w-full pl-10"
                 />
               </div>
@@ -81,7 +78,7 @@ export default function LoginPage() {
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Enter your password"
+                  placeholder={t('placeholder.password', locale)}
                   className="input input-bordered w-full pl-10 pr-10"
                 />
                 <button

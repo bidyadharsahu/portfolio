@@ -75,7 +75,7 @@ export default function Home() {
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-6 items-center">
+          <div className="grid lg:grid-cols-[1fr_auto] gap-4 items-center">
             {/* Left content */}
             <div className="space-y-8 animate-fade-in-up">
               <div className="space-y-4">
@@ -113,7 +113,7 @@ export default function Home() {
             {/* Right — Profile photo */}
             <div className="flex justify-center lg:justify-end animate-fade-in-up" style={{ animationDelay: '200ms' }}>
               <div className="relative">
-                <div className="w-72 h-72 sm:w-80 sm:h-80 rounded-3xl bg-gradient-to-br from-primary/20 via-accent/20 to-secondary/20 flex items-center justify-center overflow-hidden border-2 border-base-300/30 shadow-2xl">
+                <div className="w-64 h-64 sm:w-72 sm:h-72 rounded-3xl bg-gradient-to-br from-primary/20 via-accent/20 to-secondary/20 flex items-center justify-center overflow-hidden border-2 border-base-300/30 shadow-2xl">
                   <img src="/self.png" alt="Bidyadhar Sahu" className="w-full h-full object-cover" />
                 </div>
                 <div className="text-center mt-4">
