@@ -12,9 +12,25 @@ interface Message {
 
 const ChatWidget = () => {
   const { chatOpen, setChatOpen, locale } = useAppStore();
+
+  const getGreeting = (lang: string) => {
+    const greetings: Record<string, string> = {
+      en: "Namaskar! 🙏 I'm Bidyadhar's virtual assistant. Ask me about projects, skills, hiring, meetings, meditation, or donations. How can I help?",
+      hi: "नमस्कार! 🙏 मैं बिद्याधर का सहायक हूँ। प्रोजेक्ट्स, स्किल्स, मीटिंग, ध्यान या दान के बारे में पूछें!",
+      od: "ନମସ୍କାର! 🙏 ମୁଁ ବିଦ୍ୟାଧରଙ୍କ ସହାୟକ। ପ୍ରୋଜେକ୍ଟ, ଦକ୍ଷତା, ସଭା ବା ଦାନ ବିଷୟରେ ପଚାରନ୍ତୁ!",
+      sa: "नमस्कारः! 🙏 अहं विद्याधरस्य सहायकम्। प्रकल्पानां, दक्षतानां, सभायाः वा विषये पृच्छन्तु!",
+    };
+    return greetings[lang] || greetings.en;
+  };
+
   const [messages, setMessages] = useState<Message[]>([
-    { role: 'bot', content: "Namaste! 🙏 I'm Bidyadhar's virtual assistant. How can I help you today?" },
+    { role: 'bot', content: getGreeting(locale) },
   ]);
+
+  // Reset greeting when locale changes
+  useEffect(() => {
+    setMessages([{ role: 'bot', content: getGreeting(locale) }]);
+  }, [locale]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -34,12 +50,18 @@ const ChatWidget = () => {
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: userMsg }),
+        body: JSON.stringify({ message: userMsg, locale }),
       });
       const data = await res.json();
       setMessages((prev) => [...prev, { role: 'bot', content: data.response }]);
     } catch {
-      setMessages((prev) => [...prev, { role: 'bot', content: "Sorry, I'm having trouble right now. Please try again!" }]);
+      const errMsg: Record<string, string> = {
+        en: "Sorry, I'm having trouble right now. Please try again!",
+        hi: "क्षमा करें, अभी समस्या हो रही है। कृपया पुनः प्रयास करें!",
+        od: "କ୍ଷମା କରନ୍ତୁ, ସମସ୍ୟା ହେଉଛି। ପୁନଃ ଚେଷ୍ଟା କରନ୍ତୁ!",
+        sa: "क्षम्यताम्, समस्या वर्तते। पुनः प्रयतन्ताम्!",
+      };
+      setMessages((prev) => [...prev, { role: 'bot', content: errMsg[locale] || errMsg.en }]);
     }
     setLoading(false);
   };
@@ -86,7 +108,11 @@ const ChatWidget = () => {
                     {msg.role === 'user' ? <User className="w-3.5 h-3.5 text-primary" /> : <Bot className="w-3.5 h-3.5 text-secondary" />}
                   </div>
                   <div className={msg.role === 'user' ? 'chat-bubble-user' : 'chat-bubble-bot'}>
-                    <p className="text-sm leading-relaxed">{msg.content}</p>
+                    <p className="text-sm leading-relaxed whitespace-pre-line" dangerouslySetInnerHTML={{
+                      __html: msg.content
+                        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                        .replace(/\[(.*?)\]\((https?:\/\/.*?)\)/g, '<a href="$2" target="_blank" class="underline text-primary">$1</a>')
+                    }} />
                   </div>
                 </div>
               </div>
