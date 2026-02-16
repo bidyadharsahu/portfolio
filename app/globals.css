@@ -2,6 +2,148 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --color-primary: #1a1a2e;
+  --color-secondary: #16213e;
+  --color-accent: #e94560;
+  --color-accent2: #0f3460;
+  --color-gold: #d4a373;
+  --color-sage: #588157;
+  --color-cream: #fefae0;
+  --color-warm: #faedcd;
+}
+
+[data-theme="dark"] {
+  --color-primary: #0a0a0f;
+  --color-secondary: #111827;
+  --color-accent: #f43f5e;
+  --color-accent2: #1e40af;
+  --color-gold: #d4a373;
+  --color-sage: #6b8f71;
+  --color-cream: #1f2937;
+  --color-warm: #1a1a2e;
+}
+
 html {
-    @apply transition-colors duration-200;
+  @apply transition-colors duration-200;
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-base-100 text-base-content;
+}
+
+/* Sacred geometry inspired decorative elements */
+.sacred-pattern {
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(233,69,96,0.05) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(15,52,96,0.05) 0%, transparent 50%);
+}
+
+/* Glassmorphism card */
+.glass-card {
+  @apply backdrop-blur-md bg-base-100/70 border border-base-300/30 rounded-2xl shadow-xl;
+}
+
+/* Gradient text */
+.gradient-text {
+  @apply bg-gradient-to-r from-rose-500 via-amber-500 to-emerald-500 text-transparent bg-clip-text;
+}
+
+/* Animated border gradient */
+.animated-border {
+  background: linear-gradient(90deg, #e94560, #0f3460, #d4a373, #588157, #e94560);
+  background-size: 300% 300%;
+  animation: gradient-shift 6s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Pulse live indicator */
+.pulse-live {
+  animation: pulse-ring 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+  70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  @apply bg-base-200;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-base-300 rounded-full;
+}
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-base-content/30;
+}
+
+/* Calendar grid */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+/* Iframe preview */
+.project-iframe-container {
+  @apply relative overflow-hidden rounded-xl;
+  aspect-ratio: 16/9;
+}
+.project-iframe-container iframe {
+  @apply w-full h-full border-0;
+  transform: scale(0.5);
+  transform-origin: top left;
+  width: 200%;
+  height: 200%;
+}
+
+/* Section divider */
+.section-divider {
+  @apply w-24 h-1 mx-auto rounded-full;
+  background: linear-gradient(90deg, #e94560, #d4a373);
+}
+
+/* Floating animation */
+.float-animation {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Star rating */
+.star-rating {
+  @apply flex gap-1;
+}
+.star-rating svg {
+  @apply w-6 h-6 cursor-pointer transition-colors;
+}
+
+/* Chat bubble */
+.chat-bubble-bot {
+  @apply bg-base-200 rounded-2xl rounded-bl-sm px-4 py-3;
+}
+.chat-bubble-user {
+  @apply bg-accent text-white rounded-2xl rounded-br-sm px-4 py-3;
+}
+
+/* Mobile responsive containers */
+@media (max-width: 768px) {
+  .project-iframe-container iframe {
+    transform: scale(0.35);
+    width: 286%;
+    height: 286%;
+  }
 }
