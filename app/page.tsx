@@ -11,30 +11,30 @@ import {
 const featuredProjects = [
   {
     title: 'Namaste Rides',
-    description: 'Blockchain-based decentralized carpooling platform with smart contract payments and real-time ride tracking.',
-    tech: ['Solidity', 'React', 'Node.js', 'Web3'],
+    description: 'A next-generation ride-hailing platform built to be fair, transparent, and driver-first. Features 24/7 availability, low commissions for drivers, and smart safety technology.',
+    tech: ['React', 'Next.js', 'Node.js', 'Vercel'],
     color: 'from-rose-500 to-orange-500',
     icon: <Rocket className="w-8 h-8" />,
-    category: 'Web3 / Blockchain',
-    live_url: '#',
+    category: 'Full-Stack',
+    live_url: 'https://namaste-ruby.vercel.app/',
   },
   {
     title: 'NetrikXR AR App',
-    description: 'Augmented reality application delivering immersive AR experiences for mobile devices using cutting-edge technology.',
-    tech: ['Unity', 'ARCore', 'C#', 'Flutter'],
+    description: 'Web-based augmented reality experiences that work instantly. No apps to download — just point, scan, and experience. AR photo frames, business cards, restaurant menus & more.',
+    tech: ['Next.js', 'WebAR', 'Three.js', 'Vercel'],
     color: 'from-violet-500 to-purple-500',
     icon: <Glasses className="w-8 h-8" />,
     category: 'AR / VR',
-    live_url: '#',
+    live_url: 'https://web-ar-phi.vercel.app/',
   },
   {
-    title: 'QR Code Menu System',
-    description: 'Contactless restaurant ordering — scan, browse, and order directly from your phone. No app download needed.',
+    title: 'QR Code Menu Ordering',
+    description: 'Premium QR code ordering system for modern restaurants. Customers scan, browse the menu, and order directly from their phone — completely contactless.',
     tech: ['Next.js', 'Supabase', 'Tailwind', 'QR API'],
     color: 'from-emerald-500 to-teal-500',
     icon: <Zap className="w-8 h-8" />,
-    category: 'Full-Stack',
-    live_url: '#',
+    category: 'Cloud',
+    live_url: 'https://qr-cod-shop.vercel.app/',
   },
 ];
 
@@ -76,18 +76,26 @@ export default function Home() {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Left content */}
-            <div className="space-y-8 animate-fade-in-up">
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full text-primary text-sm font-medium">
-                <span className="w-2 h-2 bg-primary rounded-full animate-pulse"></span>
-                Available for freelance work
+            {/* Left — Profile visual (shifted slightly left) */}
+            <div className="flex justify-center lg:justify-start animate-fade-in-up order-2 lg:order-1" style={{ animationDelay: '200ms' }}>
+              <div className="relative">
+                <div className="w-72 h-72 sm:w-80 sm:h-80 rounded-3xl bg-gradient-to-br from-primary/20 via-accent/20 to-secondary/20 flex items-center justify-center overflow-hidden border-2 border-base-300/30 shadow-2xl">
+                  <img src="/self.png" alt="Bidyadhar Sahu" className="w-full h-full object-cover" />
+                </div>
+                {/* Subtle details below photo */}
+                <div className="text-center mt-4 space-y-1">
+                  <p className="text-xs text-base-content/40 font-medium">15+ Projects Delivered &bull; 5.0 Client Rating</p>
+                </div>
               </div>
+            </div>
 
+            {/* Right content (shifted slightly right) */}
+            <div className="space-y-8 animate-fade-in-up lg:pl-8 order-1 lg:order-2">
               <div className="space-y-4">
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight">
                   {t('hero.greeting', locale)}{' '}
                   <span className="gradient-text">{t('hero.name', locale)}</span>
-                  <span className="inline-block animate-wave ml-2">🙏</span>
+                  <span className="inline-block ml-2">😊</span>
                 </h1>
                 <p className="text-lg sm:text-xl text-base-content/60 font-medium">{t('hero.tagline', locale)}</p>
                 <p className="text-base text-base-content/50 max-w-lg leading-relaxed">{t('hero.subtitle', locale)}</p>
@@ -107,43 +115,11 @@ export default function Home() {
 
               {/* Tech stack pills */}
               <div className="flex flex-wrap gap-2">
-                {['React', 'Next.js', 'Solidity', 'AWS', 'Python', 'Node.js', 'TypeScript'].map((tech) => (
+                {['React', 'Next.js', 'AWS', 'Python', 'Node.js', 'TypeScript', 'Docker'].map((tech) => (
                   <span key={tech} className="px-3 py-1 text-xs font-medium bg-base-200/80 text-base-content/60 rounded-full border border-base-300/50">
                     {tech}
                   </span>
                 ))}
-              </div>
-            </div>
-
-            {/* Right — Profile visual */}
-            <div className="flex justify-center lg:justify-end animate-fade-in-up" style={{ animationDelay: '200ms' }}>
-              <div className="relative">
-                <div className="w-72 h-72 sm:w-80 sm:h-80 rounded-3xl bg-gradient-to-br from-primary/20 via-accent/20 to-secondary/20 flex items-center justify-center overflow-hidden border-2 border-base-300/30 shadow-2xl">
-                  <img src="/self.png" alt="Bidyadhar Sahu" className="w-full h-full object-cover" />
-                </div>
-                {/* Floating cards */}
-                <div className="absolute -top-4 -right-4 glass-card px-4 py-3 float-animation">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-lg bg-green-500/20 flex items-center justify-center">
-                      <Code2 className="w-4 h-4 text-green-600" />
-                    </div>
-                    <div>
-                      <p className="text-xs font-semibold">15+ Projects</p>
-                      <p className="text-[10px] text-base-content/50">Delivered</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="absolute -bottom-4 -left-4 glass-card px-4 py-3 float-animation" style={{ animationDelay: '2s' }}>
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-lg bg-amber-500/20 flex items-center justify-center">
-                      <Star className="w-4 h-4 text-amber-600" />
-                    </div>
-                    <div>
-                      <p className="text-xs font-semibold">5.0 Rating</p>
-                      <p className="text-[10px] text-base-content/50">Client Reviews</p>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
           </div>

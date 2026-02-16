@@ -19,10 +19,9 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white font-bold text-lg">B</div>
-              <span className="font-bold text-xl">Bidyadhar.dev</span>
+              <span className="font-bold text-xl"><span className="text-primary">Bidyadhar</span>.tech</span>
             </div>
-            <p className="text-neutral-content/60 text-sm leading-relaxed">Full-Stack Developer & Blockchain Enthusiast crafting digital experiences from Odisha, India.</p>
+            <p className="text-neutral-content/60 text-sm leading-relaxed">Cloud Developer & Blockchain Enthusiast crafting digital experiences from Odisha, India.</p>
             <div className="flex gap-3">
               <a href="https://github.com/bidyadharsahu" target="_blank" rel="noopener noreferrer" className="btn btn-circle btn-sm btn-ghost hover:bg-primary/20"><Github className="w-4 h-4" /></a>
               <a href="https://in.linkedin.com/in/bidyadhar-sahu" target="_blank" rel="noopener noreferrer" className="btn btn-circle btn-sm btn-ghost hover:bg-primary/20"><Linkedin className="w-4 h-4" /></a>
