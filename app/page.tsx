@@ -75,22 +75,9 @@ export default function Home() {
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Left — Profile visual (shifted slightly left) */}
-            <div className="flex justify-center lg:justify-start animate-fade-in-up order-2 lg:order-1" style={{ animationDelay: '200ms' }}>
-              <div className="relative">
-                <div className="w-72 h-72 sm:w-80 sm:h-80 rounded-3xl bg-gradient-to-br from-primary/20 via-accent/20 to-secondary/20 flex items-center justify-center overflow-hidden border-2 border-base-300/30 shadow-2xl">
-                  <img src="/self.png" alt="Bidyadhar Sahu" className="w-full h-full object-cover" />
-                </div>
-                {/* Subtle details below photo */}
-                <div className="text-center mt-4 space-y-1">
-                  <p className="text-xs text-base-content/40 font-medium">15+ Projects Delivered &bull; 5.0 Client Rating</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Right content (shifted slightly right) */}
-            <div className="space-y-8 animate-fade-in-up lg:pl-8 order-1 lg:order-2">
+          <div className="grid lg:grid-cols-2 gap-6 items-center">
+            {/* Left content */}
+            <div className="space-y-8 animate-fade-in-up">
               <div className="space-y-4">
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight">
                   {t('hero.greeting', locale)}{' '}
@@ -120,6 +107,18 @@ export default function Home() {
                     {tech}
                   </span>
                 ))}
+              </div>
+            </div>
+
+            {/* Right — Profile photo */}
+            <div className="flex justify-center lg:justify-end animate-fade-in-up" style={{ animationDelay: '200ms' }}>
+              <div className="relative">
+                <div className="w-72 h-72 sm:w-80 sm:h-80 rounded-3xl bg-gradient-to-br from-primary/20 via-accent/20 to-secondary/20 flex items-center justify-center overflow-hidden border-2 border-base-300/30 shadow-2xl">
+                  <img src="/self.png" alt="Bidyadhar Sahu" className="w-full h-full object-cover" />
+                </div>
+                <div className="text-center mt-4">
+                  <p className="text-xs text-base-content/40 font-medium">15+ Projects Delivered &bull; 5.0 Client Rating</p>
+                </div>
               </div>
             </div>
           </div>
