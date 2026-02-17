@@ -178,7 +178,7 @@ export default function ProjectsPage() {
                   <iframe
                     src={previewProject.live_url}
                     className="w-full h-full border-0 rounded-b-2xl"
-                    title={`${previewProject.title} Preview`}
+                    title={`${t(previewProject.titleKey, locale)} Preview`}
                     sandbox="allow-scripts allow-same-origin allow-forms"
                   />
                 </div>
