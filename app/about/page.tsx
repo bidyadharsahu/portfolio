@@ -13,11 +13,11 @@ const skills = {
   'Tools': ['Git', 'VS Code', 'Figma', 'Postman', 'Vercel', 'Unity'],
 };
 
-const timeline = [
-  { year: '2022 - Present', title: 'Computer Science Student', org: 'NIST, Odisha', desc: 'Pursuing CSE with focus on blockchain, cloud computing, and full-stack development.' },
-  { year: '2023', title: 'Blockchain Developer (Freelance)', org: 'Various Clients', desc: 'Built decentralized applications, smart contracts, and Web3 solutions for startups.' },
-  { year: '2024', title: 'Full-Stack Developer', org: 'Freelance & Projects', desc: 'Developed AR applications, QR ordering systems, and healthcare platforms.' },
-  { year: '2025-26', title: 'Lead Developer & Freelancer', org: 'Bidyadhar.dev', desc: 'Running freelance practice, building innovative solutions across Web3, AR, and cloud.' },
+const timelineKeys = [
+  { yearKey: 'about.timeline.0.year', titleKey: 'about.timeline.0.title', orgKey: 'about.timeline.0.org', descKey: 'about.timeline.0.desc' },
+  { yearKey: 'about.timeline.1.year', titleKey: 'about.timeline.1.title', orgKey: 'about.timeline.1.org', descKey: 'about.timeline.1.desc' },
+  { yearKey: 'about.timeline.2.year', titleKey: 'about.timeline.2.title', orgKey: 'about.timeline.2.org', descKey: 'about.timeline.2.desc' },
+  { yearKey: 'about.timeline.3.year', titleKey: 'about.timeline.3.title', orgKey: 'about.timeline.3.org', descKey: 'about.timeline.3.desc' },
 ];
 
 export default function AboutPage() {
@@ -34,13 +34,13 @@ export default function AboutPage() {
               <div className="section-divider !mx-0"></div>
               <p className="text-base-content/70 leading-relaxed text-lg">{t('about.bio', locale)}</p>
               <div className="flex flex-wrap gap-4 text-sm text-base-content/60">
-                <span className="flex items-center gap-1"><MapPin className="w-4 h-4" /> Odisha, India</span>
+                <span className="flex items-center gap-1"><MapPin className="w-4 h-4" /> {t('about.location', locale)}</span>
                 <span className="flex items-center gap-1"><Mail className="w-4 h-4" /> bidyadhar.sahu.cse.2022@nist.edu</span>
               </div>
               <div className="flex gap-3">
-                <a href="https://github.com/bidyadharsahu" target="_blank" className="btn btn-outline btn-sm gap-2"><Github className="w-4 h-4" /> GitHub</a>
-                <a href="https://in.linkedin.com/in/bidyadhar-sahu" target="_blank" className="btn btn-outline btn-sm gap-2"><Linkedin className="w-4 h-4" /> LinkedIn</a>
-                <a href="#" className="btn btn-primary btn-sm text-white gap-2"><Download className="w-4 h-4" /> Resume</a>
+                <a href="https://github.com/bidyadharsahu" target="_blank" className="btn btn-outline btn-sm gap-2"><Github className="w-4 h-4" /> {t('about.github', locale)}</a>
+                <a href="https://in.linkedin.com/in/bidyadhar-sahu" target="_blank" className="btn btn-outline btn-sm gap-2"><Linkedin className="w-4 h-4" /> {t('about.linkedin', locale)}</a>
+                <a href="#" className="btn btn-primary btn-sm text-white gap-2"><Download className="w-4 h-4" /> {t('about.resume', locale)}</a>
               </div>
             </div>
             <div className="flex justify-center">
@@ -78,21 +78,21 @@ export default function AboutPage() {
       <section className="py-20 bg-base-200/50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12 space-y-4">
-            <h2 className="text-3xl font-bold flex items-center justify-center gap-2"><Briefcase className="w-8 h-8 text-primary" /> Journey & {t('about.experience', locale)}</h2>
+            <h2 className="text-3xl font-bold flex items-center justify-center gap-2"><Briefcase className="w-8 h-8 text-primary" /> {t('about.journey', locale)} {t('about.experience', locale)}</h2>
             <div className="section-divider"></div>
           </div>
           <div className="space-y-8">
-            {timeline.map((item, i) => (
+            {timelineKeys.map((item, i) => (
               <div key={i} className="flex gap-6">
                 <div className="flex flex-col items-center">
                   <div className="w-4 h-4 rounded-full bg-primary shadow-lg shadow-primary/30"></div>
-                  {i < timeline.length - 1 && <div className="w-0.5 flex-1 bg-base-300 mt-2"></div>}
+                  {i < timelineKeys.length - 1 && <div className="w-0.5 flex-1 bg-base-300 mt-2"></div>}
                 </div>
                 <div className="glass-card p-6 flex-1 mb-4">
-                  <span className="text-xs text-primary font-medium">{item.year}</span>
-                  <h3 className="font-semibold text-lg mt-1">{item.title}</h3>
-                  <p className="text-sm text-base-content/50">{item.org}</p>
-                  <p className="text-sm text-base-content/60 mt-2">{item.desc}</p>
+                  <span className="text-xs text-primary font-medium">{t(item.yearKey, locale)}</span>
+                  <h3 className="font-semibold text-lg mt-1">{t(item.titleKey, locale)}</h3>
+                  <p className="text-sm text-base-content/50">{t(item.orgKey, locale)}</p>
+                  <p className="text-sm text-base-content/60 mt-2">{t(item.descKey, locale)}</p>
                 </div>
               </div>
             ))}
@@ -103,13 +103,22 @@ export default function AboutPage() {
       {/* Interests */}
       <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12 space-y-4">
-          <h2 className="text-3xl font-bold flex items-center justify-center gap-2"><Heart className="w-8 h-8 text-primary" /> Hobbies & Interests</h2>
+          <h2 className="text-3xl font-bold flex items-center justify-center gap-2"><Heart className="w-8 h-8 text-primary" /> {t('about.hobbies', locale)}</h2>
           <div className="section-divider"></div>
         </div>
         <div className="flex flex-wrap justify-center gap-4">
-          {['🎨 Painting', '🎬 Movies', '👨‍💻 Blockchain Experiments', '🌿 Nature', '📚 Tech Blogs', '🧘 Meditation', '🎵 Music', '✈️ Travel'].map((hobby) => (
-            <div key={hobby} className="glass-card px-6 py-4 text-center hover:scale-105 transition-transform">
-              <span className="text-lg">{hobby}</span>
+          {[
+            { emoji: '🎨', key: 'about.hobby.painting' },
+            { emoji: '🎬', key: 'about.hobby.movies' },
+            { emoji: '👨\u200D💻', key: 'about.hobby.blockchain' },
+            { emoji: '🌿', key: 'about.hobby.nature' },
+            { emoji: '📚', key: 'about.hobby.techblogs' },
+            { emoji: '🧘', key: 'about.hobby.meditation' },
+            { emoji: '🎵', key: 'about.hobby.music' },
+            { emoji: '✈️', key: 'about.hobby.travel' },
+          ].map((hobby) => (
+            <div key={hobby.key} className="glass-card px-6 py-4 text-center hover:scale-105 transition-transform">
+              <span className="text-lg">{hobby.emoji} {t(hobby.key, locale)}</span>
             </div>
           ))}
         </div>

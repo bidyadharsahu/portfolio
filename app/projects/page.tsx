@@ -9,55 +9,55 @@ import Link from 'next/link';
 const allProjects = [
   {
     id: '1',
-    title: 'Namaste Rides',
+    titleKey: 'projects.proj.1.title',
     slug: 'namaste-rides',
-    description: 'A next-generation ride-hailing platform redefining the way you ride. Fair, transparent, and driver-first — with low commissions, smart safety technology, 24/7 availability, and services including corporate transport, airport pickups, city tours, and special events. Growing across 3+ cities.',
+    descKey: 'projects.proj.1.desc',
     tech: ['React', 'Next.js', 'Node.js', 'Tailwind CSS', 'Vercel', 'REST API'],
     live_url: 'https://namaste-ruby.vercel.app/',
     github_url: 'https://github.com/bidyadharsahu/namaste',
     category: 'Full-Stack',
     icon: <Rocket className="w-10 h-10" />,
     color: 'from-rose-500 to-orange-500',
-    features: ['Real-time ride matching & tracking', 'Driver-first low commission model', 'Corporate transport & airport services', 'City tours & special event bookings', 'Multi-role support (rider, driver, admin)'],
+    featureKeys: ['projects.proj.1.f1', 'projects.proj.1.f2', 'projects.proj.1.f3', 'projects.proj.1.f4', 'projects.proj.1.f5'],
   },
   {
     id: '2',
-    title: 'NetrikXR AR App',
+    titleKey: 'projects.proj.2.title',
     slug: 'netrikxr',
-    description: 'Web-based augmented reality experiences that work instantly — no apps to download. Point your phone at images, products, or packaging and watch content come alive. Offers AR photo frames, AR business cards, AR restaurant menus, 3D product visualization, and custom AR experiences for businesses.',
+    descKey: 'projects.proj.2.desc',
     tech: ['Next.js', 'WebAR', 'Three.js', 'A-Frame', 'Tailwind CSS', 'Vercel'],
     live_url: 'https://web-ar-phi.vercel.app/',
     github_url: 'https://github.com/bidyadharsahu/webAR',
     category: 'AR / VR',
     icon: <Glasses className="w-10 h-10" />,
     color: 'from-violet-500 to-purple-500',
-    features: ['Browser-based AR — no app needed', 'AR photo frames for living memories', 'AR business cards with video portfolios', 'Restaurant menus with 3D food previews', 'Custom enterprise AR solutions'],
+    featureKeys: ['projects.proj.2.f1', 'projects.proj.2.f2', 'projects.proj.2.f3', 'projects.proj.2.f4', 'projects.proj.2.f5'],
   },
   {
     id: '3',
-    title: 'QR Code Menu Ordering',
+    titleKey: 'projects.proj.3.title',
     slug: 'qr-menu',
-    description: 'A premium QR code ordering system for modern restaurants. Customers scan a QR code at their table, browse the full menu with images and descriptions, customize orders, and place them — all contactless from their phone. Includes a staff admin panel for real-time order management.',
+    descKey: 'projects.proj.3.desc',
     tech: ['Next.js', 'Supabase', 'Tailwind CSS', 'QR API', 'PWA', 'Vercel'],
     live_url: 'https://qr-cod-shop.vercel.app/',
     github_url: 'https://github.com/bidyadharsahu/qr_cod_shop',
     category: 'Cloud',
     icon: <Zap className="w-10 h-10" />,
     color: 'from-emerald-500 to-teal-500',
-    features: ['Dynamic QR code table scanning', 'Real-time order management dashboard', 'Staff admin login & kitchen display', 'Multi-language menu support', 'Contactless end-to-end ordering'],
+    featureKeys: ['projects.proj.3.f1', 'projects.proj.3.f2', 'projects.proj.3.f3', 'projects.proj.3.f4', 'projects.proj.3.f5'],
   },
   {
     id: '4',
-    title: 'Portfolio Platform (This Site)',
+    titleKey: 'projects.proj.4.title',
     slug: 'portfolio',
-    description: 'A full-featured portfolio & CRM platform with multilingual support (English, Hindi, Odia, Sanskrit), AI chatbot, donation system, meditation classes, livestreaming, calendar, and admin CRM dashboard for managing freelance clients.',
+    descKey: 'projects.proj.4.desc',
     tech: ['Next.js', 'Supabase', 'Tailwind CSS', 'TypeScript', 'Zustand', 'Vercel'],
     live_url: 'https://bidyadharsahu.tech',
     github_url: 'https://github.com/bidyadharsahu/portfolio',
     category: 'Cloud',
     icon: <Code2 className="w-10 h-10" />,
     color: 'from-pink-500 to-rose-500',
-    features: ['4-language multilingual support', 'Real-time AI chatbot', 'Admin CRM dashboard', 'Customer portal & authentication', 'Calendar scheduling & event management'],
+    featureKeys: ['projects.proj.4.f1', 'projects.proj.4.f2', 'projects.proj.4.f3', 'projects.proj.4.f4', 'projects.proj.4.f5'],
   },
 ];
 
@@ -120,11 +120,11 @@ export default function ProjectsPage() {
               </div>
 
               <div className="p-6 space-y-4">
-                <h3 className="text-xl font-bold group-hover:text-primary transition-colors">{project.title}</h3>
-                <p className="text-sm text-base-content/60 leading-relaxed line-clamp-3">{project.description}</p>
+                <h3 className="text-xl font-bold group-hover:text-primary transition-colors">{t(project.titleKey, locale)}</h3>
+                <p className="text-sm text-base-content/60 leading-relaxed line-clamp-3">{t(project.descKey, locale)}</p>
                 <div className="flex flex-wrap gap-2">
-                  {project.tech.slice(0, 4).map((t) => (
-                    <span key={t} className="text-xs px-2 py-1 bg-base-200 rounded-md text-base-content/70">{t}</span>
+                  {project.tech.slice(0, 4).map((tag) => (
+                    <span key={tag} className="text-xs px-2 py-1 bg-base-200 rounded-md text-base-content/70">{tag}</span>
                   ))}
                   {project.tech.length > 4 && (
                     <span className="text-xs px-2 py-1 bg-base-200 rounded-md text-base-content/50">+{project.tech.length - 4}</span>
@@ -136,7 +136,7 @@ export default function ProjectsPage() {
                   </a>
                   {project.github_url && (
                     <a href={project.github_url} target="_blank" rel="noopener noreferrer" className="btn btn-ghost btn-sm gap-1">
-                      <Github className="w-3.5 h-3.5" /> Code
+                      <Github className="w-3.5 h-3.5" /> {t('projects.code', locale)}
                     </a>
                   )}
                 </div>
@@ -158,16 +158,16 @@ export default function ProjectsPage() {
                       {previewProject.icon}
                     </div>
                     <div>
-                      <h3 className="font-bold">{previewProject.title}</h3>
+                      <h3 className="font-bold">{t(previewProject.titleKey, locale)}</h3>
                       <p className="text-xs text-base-content/60">{previewProject.live_url}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
                     <button onClick={() => setShowLivePreview(false)} className="btn btn-ghost btn-sm">
-                      Back to Details
+                      {t('projects.backToDetails', locale)}
                     </button>
                     <a href={previewProject.live_url} target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-sm text-white gap-1">
-                      <ExternalLink className="w-3.5 h-3.5" /> Open Full Site
+                      <ExternalLink className="w-3.5 h-3.5" /> {t('projects.openFullSite', locale)}
                     </a>
                     <button onClick={() => { setPreviewProject(null); setShowLivePreview(false); }} className="btn btn-circle btn-sm btn-ghost">
                       <X className="w-4 h-4" />
@@ -194,27 +194,27 @@ export default function ProjectsPage() {
                 <div className="p-8 space-y-6">
                   <div>
                     <span className="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full font-medium">{previewProject.category}</span>
-                    <h2 className="text-2xl font-bold mt-3">{previewProject.title}</h2>
+                    <h2 className="text-2xl font-bold mt-3">{t(previewProject.titleKey, locale)}</h2>
                   </div>
-                  <p className="text-base-content/70 leading-relaxed">{previewProject.description}</p>
+                  <p className="text-base-content/70 leading-relaxed">{t(previewProject.descKey, locale)}</p>
 
                   <div>
-                    <h4 className="font-semibold mb-3">Key Features</h4>
+                    <h4 className="font-semibold mb-3">{t('projects.keyFeatures', locale)}</h4>
                     <ul className="space-y-2">
-                      {previewProject.features.map((f, i) => (
+                      {previewProject.featureKeys.map((fk, i) => (
                         <li key={i} className="flex items-start gap-2 text-sm text-base-content/70">
                           <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0"></span>
-                          {f}
+                          {t(fk, locale)}
                         </li>
                       ))}
                     </ul>
                   </div>
 
                   <div>
-                    <h4 className="font-semibold mb-3">Tech Stack</h4>
+                    <h4 className="font-semibold mb-3">{t('projects.techStack', locale)}</h4>
                     <div className="flex flex-wrap gap-2">
-                      {previewProject.tech.map((t) => (
-                        <span key={t} className="px-3 py-1.5 bg-base-200 rounded-lg text-sm">{t}</span>
+                      {previewProject.tech.map((tag) => (
+                        <span key={tag} className="px-3 py-1.5 bg-base-200 rounded-lg text-sm">{tag}</span>
                       ))}
                     </div>
                   </div>

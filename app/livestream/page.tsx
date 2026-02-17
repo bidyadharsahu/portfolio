@@ -32,24 +32,24 @@ export default function LivestreamPage() {
 
           <div className="space-y-3">
             <h2 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-red-500 to-rose-500 bg-clip-text text-transparent">
-              Going Live Soon
+              {t('livestream.goingLive', locale)}
             </h2>
             <p className="text-base-content/60 text-lg max-w-md mx-auto leading-relaxed">
-              Live coding sessions, tech talks, and interactive workshops are being prepared. Get ready for real-time learning experiences with Bidyadhar.
+              {t('livestream.goingLiveDesc', locale)}
             </p>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
             <Link href="/calendar" className="btn btn-primary text-white gap-2 shadow-lg shadow-primary/25">
-              <Bell className="w-4 h-4" /> Stay Updated via Calendar
+              <Bell className="w-4 h-4" /> {t('livestream.stayUpdated', locale)}
             </Link>
             <Link href="/" className="btn btn-ghost gap-2">
-              Back to Home
+              {t('livestream.backHome', locale)}
             </Link>
           </div>
 
           <p className="text-xs text-base-content/30 pt-4">
-            — The stream will begin when the time is right —
+            {t('livestream.streamBegin', locale)}
           </p>
         </div>
       </section>

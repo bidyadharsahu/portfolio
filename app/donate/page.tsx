@@ -125,17 +125,16 @@ export default function DonatePage() {
           </div>
           <h2 className="text-3xl font-bold">{t('donate.thanks', locale)} 🙏</h2>
           <p className="text-base-content/60">
-            Your generous contribution of <span className="font-bold text-primary">₹{finalAmount.toLocaleString()}</span> means the world!
-            It fuels innovation and keeps open-source projects alive.
+            {t('donate.thanksContribution', locale)}
           </p>
           <div className="glass-card p-4 bg-base-200/50 text-left space-y-2 text-sm">
-            <p><span className="text-base-content/50">Donor:</span> <span className="font-semibold">{donorName}</span></p>
-            <p><span className="text-base-content/50">Amount:</span> <span className="font-semibold text-primary">₹{finalAmount.toLocaleString()}</span></p>
-            {message && <p><span className="text-base-content/50">Message:</span> <span className="italic">"{message}"</span></p>}
+            <p><span className="text-base-content/50">{t('donate.donor', locale)}:</span> <span className="font-semibold">{donorName}</span></p>
+            <p><span className="text-base-content/50">{t('donate.amount', locale)}:</span> <span className="font-semibold text-primary">₹{finalAmount.toLocaleString()}</span></p>
+            {message && <p><span className="text-base-content/50">{t('donate.message', locale)}:</span> <span className="italic">"{message}"</span></p>}
             <p><span className="text-base-content/50">UPI:</span> <span className="font-mono text-xs">{UPI_ID}</span></p>
           </div>
           <button onClick={handleDonateAgain} className="btn btn-primary text-white gap-2">
-            <Heart className="w-4 h-4" /> Donate Again
+            <Heart className="w-4 h-4" /> {t('donate.donateAgain', locale)}
           </button>
         </div>
       </div>
@@ -149,26 +148,26 @@ export default function DonatePage() {
       <div className="min-h-screen sacred-pattern">
         <section className="py-16 sm:py-20 bg-gradient-to-br from-amber-900/20 via-base-100 to-orange-900/20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
-            <h1 className="text-3xl sm:text-4xl font-bold">Complete Your Donation</h1>
-            <p className="text-base-content/60">Pay ₹{finalAmount.toLocaleString()} via UPI</p>
+            <h1 className="text-3xl sm:text-4xl font-bold">{t('donate.complete', locale)}</h1>
+            <p className="text-base-content/60">{t('donate.payVia', locale)} ₹{finalAmount.toLocaleString()}</p>
           </div>
         </section>
 
         <div className="max-w-lg mx-auto px-4 sm:px-6 py-12 space-y-6">
           <button onClick={() => setStep('form')} className="btn btn-ghost btn-sm gap-1">
-            <ArrowLeft className="w-4 h-4" /> Back
+            <ArrowLeft className="w-4 h-4" /> {t('donate.back', locale)}
           </button>
 
           <div className="glass-card p-8 space-y-6 text-center">
             {/* Amount display */}
             <div className="space-y-1">
-              <p className="text-base-content/50 text-sm">Amount to Pay</p>
+              <p className="text-base-content/50 text-sm">{t('donate.amountToPay', locale)}</p>
               <p className="text-5xl font-bold text-primary">₹{finalAmount.toLocaleString()}</p>
             </div>
 
             {/* UPI ID card */}
             <div className="bg-gradient-to-br from-amber-500/10 to-orange-500/10 border border-amber-500/20 rounded-2xl p-6 space-y-3">
-              <p className="text-sm text-base-content/60 font-medium">Pay to UPI ID</p>
+              <p className="text-sm text-base-content/60 font-medium">{t('donate.payToUPI', locale)}</p>
               <div className="flex items-center justify-center gap-3">
                 <span className="text-lg sm:text-xl font-mono font-bold text-amber-600 dark:text-amber-400">{UPI_ID}</span>
                 <button onClick={copyUPI} className="btn btn-ghost btn-sm btn-circle">
@@ -186,7 +185,7 @@ export default function DonatePage() {
               Open UPI App to Pay ₹{finalAmount.toLocaleString()}
             </a>
 
-            <div className="divider text-xs text-base-content/40">After payment</div>
+            <div className="divider text-xs text-base-content/40">{t('donate.afterPayment', locale)}</div>
 
             {/* Confirm button */}
             <button
@@ -195,11 +194,11 @@ export default function DonatePage() {
               className="btn btn-outline btn-success w-full gap-2"
             >
               {saving ? <span className="loading loading-spinner loading-sm"></span> : <CheckCircle2 className="w-5 h-5" />}
-              I've Completed the Payment
+              {t('donate.completedPayment', locale)}
             </button>
 
             <p className="text-xs text-base-content/40">
-              Click above after you've paid via UPI. Your donation will be recorded and visible in real-time.
+              {t('donate.clickAfterPay', locale)}
             </p>
           </div>
         </div>
@@ -230,21 +229,21 @@ export default function DonatePage() {
             <div className="flex gap-6 justify-center text-center">
               <div>
                 <p className="text-2xl font-bold text-primary">₹{totalRaised.toLocaleString()}</p>
-                <p className="text-xs text-base-content/50">Total Raised</p>
+                <p className="text-xs text-base-content/50">{t('donate.totalRaised', locale)}</p>
               </div>
               <div className="h-10 w-px bg-base-300/50"></div>
               <div>
                 <p className="text-2xl font-bold text-primary">{donorCount}</p>
-                <p className="text-xs text-base-content/50">Supporters</p>
+                <p className="text-xs text-base-content/50">{t('donate.supporters', locale)}</p>
               </div>
             </div>
 
             {/* Impact cards */}
             <div className="grid grid-cols-3 gap-4">
               {[
-                { icon: <Coffee className="w-5 h-5" />, label: 'Buy a Coffee', amount: '₹100' },
-                { icon: <Heart className="w-5 h-5" />, label: 'Support a Project', amount: '₹1,000' },
-                { icon: <Sparkles className="w-5 h-5" />, label: 'Sponsor Innovation', amount: '₹10,000' },
+                { icon: <Coffee className="w-5 h-5" />, label: t('donate.buyCoffee', locale), amount: '₹100' },
+                { icon: <Heart className="w-5 h-5" />, label: t('donate.supportProject', locale), amount: '₹1,000' },
+                { icon: <Sparkles className="w-5 h-5" />, label: t('donate.sponsorInnovation', locale), amount: '₹10,000' },
               ].map((item, i) => (
                 <div key={i} className="text-center p-3 bg-base-200/50 rounded-xl">
                   <div className="text-primary mb-1 flex justify-center">{item.icon}</div>
@@ -256,7 +255,7 @@ export default function DonatePage() {
 
             {/* Name */}
             <div>
-              <label className="text-sm font-medium mb-1.5 block">Your Name *</label>
+              <label className="text-sm font-medium mb-1.5 block">{t('donate.yourName', locale)} *</label>
               <input type="text" value={donorName} onChange={(e) => setDonorName(e.target.value)} placeholder="Enter your name" className="input input-bordered w-full" />
             </div>
 
@@ -274,7 +273,7 @@ export default function DonatePage() {
 
             {/* Custom amount */}
             <div>
-              <label className="text-sm font-medium mb-1.5 block">Or enter custom amount</label>
+              <label className="text-sm font-medium mb-1.5 block">{t('donate.customAmount', locale)}</label>
               <div className="relative">
                 <IndianRupee className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-base-content/40" />
                 <input type="number" value={customAmount} onChange={(e) => setCustomAmount(e.target.value)} placeholder="Enter amount" className="input input-bordered w-full pl-10" min="1" />
@@ -290,31 +289,31 @@ export default function DonatePage() {
             {/* UPI Info */}
             <div className="bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/20 rounded-xl p-4 flex items-center justify-between gap-4">
               <div>
-                <p className="text-xs text-base-content/50 mb-0.5">UPI Payment</p>
+                <p className="text-xs text-base-content/50 mb-0.5">{t('donate.upiPayment', locale)}</p>
                 <p className="font-mono text-sm font-semibold text-amber-600 dark:text-amber-400">{UPI_ID}</p>
               </div>
               <button onClick={copyUPI} className="btn btn-ghost btn-sm gap-1.5">
-                {copied ? <><CheckCircle2 className="w-4 h-4 text-green-500" /> Copied</> : <><Copy className="w-4 h-4" /> Copy</>}
+                {copied ? <><CheckCircle2 className="w-4 h-4 text-green-500" /> {t('donate.copied', locale)}</> : <><Copy className="w-4 h-4" /> {t('donate.copy', locale)}</>}
               </button>
             </div>
 
             <button onClick={handleProceed} className="btn btn-primary w-full text-white text-lg gap-2 h-14">
-              <Heart className="w-5 h-5" /> Proceed to Pay — ₹{(finalAmount || 0).toLocaleString()}
+              <Heart className="w-5 h-5" /> {t('donate.proceedToPay', locale)} — ₹{(finalAmount || 0).toLocaleString()}
             </button>
 
-            <p className="text-center text-xs text-base-content/40">All donations are voluntary. Thank you for your support! 🙏</p>
+            <p className="text-center text-xs text-base-content/40">{t('donate.voluntary', locale)}</p>
           </div>
 
           {/* Sidebar - Recent Donations (realtime) - 2 cols */}
           <div className="lg:col-span-2 space-y-4">
             <h3 className="font-bold text-lg flex items-center gap-2">
-              <Users className="w-5 h-5 text-primary" /> Recent Supporters
+              <Users className="w-5 h-5 text-primary" /> {t('donate.recentSupporters', locale)}
               <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" title="Live"></span>
             </h3>
             {recentDonations.length === 0 ? (
               <div className="glass-card p-8 text-center">
                 <Heart className="w-10 h-10 text-base-content/20 mx-auto mb-2" />
-                <p className="text-sm text-base-content/50">Be the first to donate!</p>
+                <p className="text-sm text-base-content/50">{t('donate.beFirst', locale)}</p>
               </div>
             ) : (
               recentDonations.map((d) => (

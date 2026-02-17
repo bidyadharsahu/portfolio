@@ -7,8 +7,14 @@ import { Star, MessageSquare, Send, ThumbsUp } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { createClient } from '@/lib/supabase/client';
 
-const StarRating = ({ value, onChange, label }: { value: number; onChange: (v: number) => void; label: string }) => {
+const StarRating = ({ value, onChange, label, locale }: { value: number; onChange: (v: number) => void; label: string; locale: string }) => {
   const [hover, setHover] = useState(0);
+  const ratingLabels: Record<string, string[]> = {
+    en: ['', 'Poor', 'Fair', 'Good', 'Great', 'Excellent'],
+    hi: ['', 'खराब', 'ठीक', 'अच्छा', 'बहुत अच्छा', 'उत्कृष्ट'],
+    od: ['', 'ଖରାପ', 'ଠିକ', 'ଭଲ', 'ବହୁତ ଭଲ', 'ଉତ୍କୃଷ୍ଟ'],
+    sa: ['', 'निकृष्टम्', 'साधारणम्', 'उत्तमम्', 'अति उत्तमम्', 'श्रेष्ठम्'],
+  };
   return (
     <div>
       <label className="text-sm font-medium mb-2 block">{label}</label>
@@ -30,7 +36,7 @@ const StarRating = ({ value, onChange, label }: { value: number; onChange: (v: n
           </button>
         ))}
         <span className="ml-2 text-sm text-base-content/50 self-center">
-          {value > 0 ? ['', 'Poor', 'Fair', 'Good', 'Great', 'Excellent'][value] : ''}
+          {value > 0 ? (ratingLabels[locale] || ratingLabels['en'])[value] : ''}
         </span>
       </div>
     </div>
@@ -110,40 +116,40 @@ export default function FeedbackPage() {
         <div className="grid lg:grid-cols-2 gap-12">
           {/* Feedback Form */}
           <div>
-            <h2 className="text-2xl font-bold mb-6">Leave Your Feedback</h2>
+            <h2 className="text-2xl font-bold mb-6">{t('feedback.leaveYour', locale)}</h2>
             {submitted ? (
               <div className="glass-card p-12 text-center space-y-4">
                 <div className="w-20 h-20 rounded-full bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center mx-auto">
                   <ThumbsUp className="w-10 h-10 text-white" />
                 </div>
                 <h3 className="text-2xl font-bold">{t('feedback.thanks', locale)}</h3>
-                <p className="text-base-content/60">Your feedback helps me grow and improve.</p>
+                <p className="text-base-content/60">{t('feedback.helpsGrow', locale)}</p>
                 <button onClick={() => { setSubmitted(false); setWebsiteRating(0); setWorkRating(0); setMessage(''); setName(''); }} className="btn btn-primary text-white">
-                  Submit Another
+                  {t('feedback.submitAnother', locale)}
                 </button>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="glass-card p-8 space-y-6">
                 <div>
-                  <label className="text-sm font-medium mb-1.5 block">Your Name *</label>
+                  <label className="text-sm font-medium mb-1.5 block">{t('feedback.yourName', locale)} *</label>
                   <input
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    placeholder="Enter your name"
+                    placeholder={t('placeholder.feedbackName', locale)}
                     className="input input-bordered w-full"
                   />
                 </div>
 
-                <StarRating value={websiteRating} onChange={setWebsiteRating} label={t('feedback.website', locale) + ' *'} />
-                <StarRating value={workRating} onChange={setWorkRating} label={t('feedback.work', locale) + ' *'} />
+                <StarRating value={websiteRating} onChange={setWebsiteRating} label={t('feedback.website', locale) + ' *'} locale={locale} />
+                <StarRating value={workRating} onChange={setWorkRating} label={t('feedback.work', locale) + ' *'} locale={locale} />
 
                 <div>
                   <label className="text-sm font-medium mb-1.5 block">{t('feedback.message', locale)}</label>
                   <textarea
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    placeholder="Share your thoughts, suggestions, or experience..."
+                    placeholder={t('placeholder.feedbackMessage', locale)}
                     className="textarea textarea-bordered w-full min-h-[120px]"
                   />
                 </div>
@@ -157,12 +163,12 @@ export default function FeedbackPage() {
 
           {/* Existing Feedback */}
           <div>
-            <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">What Others Say <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" title="Live"></span></h2>
+            <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">{t('feedback.whatOthersSay', locale)} <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" title="Live"></span></h2>
             <div className="space-y-4">
               {feedbackList.length === 0 ? (
                 <div className="glass-card p-8 text-center">
                   <MessageSquare className="w-10 h-10 text-base-content/20 mx-auto mb-2" />
-                  <p className="text-sm text-base-content/50">Be the first to leave feedback!</p>
+                  <p className="text-sm text-base-content/50">{t('feedback.beFirst', locale)}</p>
                 </div>
               ) : feedbackList.map((fb) => (
                 <div key={fb.id} className="glass-card p-6 space-y-3">
@@ -184,8 +190,8 @@ export default function FeedbackPage() {
                   </div>
                   {fb.message && <p className="text-sm text-base-content/70 leading-relaxed">"{fb.message}"</p>}
                   <div className="flex gap-4 text-xs text-base-content/50">
-                    <span>Website: {fb.website_rating || '—'}/5</span>
-                    <span>Work: {fb.work_rating || '—'}/5</span>
+                    <span>{t('feedback.website.label', locale)}: {fb.website_rating || '—'}/5</span>
+                    <span>{t('feedback.work.label', locale)}: {fb.work_rating || '—'}/5</span>
                   </div>
                 </div>
               ))}
