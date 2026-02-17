@@ -10,8 +10,8 @@ import {
 
 const featuredProjects = [
   {
-    title: 'Namaste Rides',
-    description: 'A next-generation ride-hailing platform built to be fair, transparent, and driver-first. Features 24/7 availability, low commissions for drivers, and smart safety technology.',
+    titleKey: 'projects.featured.0.title',
+    descKey: 'projects.featured.0.desc',
     tech: ['React', 'Next.js', 'Node.js', 'Vercel'],
     color: 'from-rose-500 to-orange-500',
     icon: <Rocket className="w-8 h-8" />,
@@ -19,8 +19,8 @@ const featuredProjects = [
     live_url: 'https://namaste-ruby.vercel.app/',
   },
   {
-    title: 'NetrikXR AR App',
-    description: 'Web-based augmented reality experiences that work instantly. No apps to download — just point, scan, and experience. AR photo frames, business cards, restaurant menus & more.',
+    titleKey: 'projects.featured.1.title',
+    descKey: 'projects.featured.1.desc',
     tech: ['Next.js', 'WebAR', 'Three.js', 'Vercel'],
     color: 'from-violet-500 to-purple-500',
     icon: <Glasses className="w-8 h-8" />,
@@ -28,8 +28,8 @@ const featuredProjects = [
     live_url: 'https://web-ar-phi.vercel.app/',
   },
   {
-    title: 'QR Code Menu Ordering',
-    description: 'Premium QR code ordering system for modern restaurants. Customers scan, browse the menu, and order directly from their phone — completely contactless.',
+    titleKey: 'projects.featured.2.title',
+    descKey: 'projects.featured.2.desc',
     tech: ['Next.js', 'Supabase', 'Tailwind', 'QR API'],
     color: 'from-emerald-500 to-teal-500',
     icon: <Zap className="w-8 h-8" />,
@@ -39,16 +39,16 @@ const featuredProjects = [
 ];
 
 const stats = [
-  { number: '15+', label: 'Projects Delivered' },
-  { number: '10+', label: 'Happy Clients' },
-  { number: '3+', label: 'Years Experience' },
-  { number: '5+', label: 'Technologies' },
+  { number: '15+', labelKey: 'stats.projects' },
+  { number: '10+', labelKey: 'stats.clients' },
+  { number: '3+', labelKey: 'stats.experience' },
+  { number: '5+', labelKey: 'stats.technologies' },
 ];
 
 const testimonials = [
-  { name: 'Rajesh Kumar', role: 'Startup Founder', message: 'Bidyadhar delivered our blockchain project ahead of schedule. Exceptional quality and communication!', rating: 5 },
-  { name: 'Priya Sharma', role: 'Restaurant Owner', message: 'The QR menu system transformed our business. Customers love the contactless experience!', rating: 5 },
-  { name: 'Amit Patel', role: 'Tech Lead', message: 'Solid understanding of Web3 concepts. The smart contract implementation was flawless.', rating: 5 },
+  { nameKey: 'testimonials.0.name', roleKey: 'testimonials.0.role', messageKey: 'testimonials.0.message', rating: 5 },
+  { nameKey: 'testimonials.1.name', roleKey: 'testimonials.1.role', messageKey: 'testimonials.1.message', rating: 5 },
+  { nameKey: 'testimonials.2.name', roleKey: 'testimonials.2.role', messageKey: 'testimonials.2.message', rating: 5 },
 ];
 
 export default function Home() {
@@ -73,7 +73,6 @@ export default function Home() {
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight">
                   {t('hero.greeting', locale)}{' '}
                   <span className="gradient-text">{t('hero.name', locale)}</span>
-                  <span className="inline-block ml-2">😊</span>
                 </h1>
                 <p className="text-lg sm:text-xl text-base-content/60 font-medium">{t('hero.tagline', locale)}</p>
                 <p className="text-base text-base-content/50 max-w-lg leading-relaxed">{t('hero.subtitle', locale)}</p>
@@ -108,7 +107,7 @@ export default function Home() {
                   <img src="/self.png" alt="Bidyadhar Sahu" className="w-full h-full object-cover" />
                 </div>
                 <div className="text-center mt-4">
-                  <p className="text-xs text-base-content/40 font-medium">15+ Projects Delivered &bull; 5.0 Client Rating</p>
+                  <p className="text-xs text-base-content/40 font-medium">{t('hero.photoCaption', locale)}</p>
                 </div>
               </div>
             </div>
@@ -123,7 +122,7 @@ export default function Home() {
             {stats.map((stat, i) => (
               <div key={i} className="text-center text-white">
                 <p className="text-3xl sm:text-4xl font-bold">{stat.number}</p>
-                <p className="text-white/70 text-sm mt-1">{stat.label}</p>
+                <p className="text-white/70 text-sm mt-1">{t(stat.labelKey, locale)}</p>
               </div>
             ))}
           </div>
@@ -150,15 +149,15 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="p-6 space-y-4">
-                  <h3 className="text-xl font-bold group-hover:text-primary transition-colors">{project.title}</h3>
-                  <p className="text-sm text-base-content/60 leading-relaxed">{project.description}</p>
+                  <h3 className="text-xl font-bold group-hover:text-primary transition-colors">{t(project.titleKey, locale)}</h3>
+                  <p className="text-sm text-base-content/60 leading-relaxed">{t(project.descKey, locale)}</p>
                   <div className="flex flex-wrap gap-2">
-                    {project.tech.map((t) => (
-                      <span key={t} className="text-xs px-2 py-1 bg-base-200 rounded-md text-base-content/70">{t}</span>
+                    {project.tech.map((tag) => (
+                      <span key={tag} className="text-xs px-2 py-1 bg-base-200 rounded-md text-base-content/70">{tag}</span>
                     ))}
                   </div>
                   <Link href="/projects" className="inline-flex items-center gap-1 text-primary text-sm font-medium hover:gap-2 transition-all">
-                    Learn More <ChevronRight className="w-4 h-4" />
+                    {t('projects.learnMore', locale)} <ChevronRight className="w-4 h-4" />
                   </Link>
                 </div>
               </div>
@@ -207,9 +206,9 @@ export default function Home() {
       <section className="py-20 sm:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 space-y-4">
-            <h2 className="text-3xl sm:text-4xl font-bold">Client Testimonials</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold">{t('testimonials.title', locale)}</h2>
             <div className="section-divider"></div>
-            <p className="text-base-content/60">What people say about working with me</p>
+            <p className="text-base-content/60">{t('testimonials.subtitle', locale)}</p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
@@ -221,14 +220,14 @@ export default function Home() {
                     <Star key={j} className="w-4 h-4 text-amber-400 fill-amber-400" />
                   ))}
                 </div>
-                <p className="text-base-content/70 text-sm leading-relaxed mb-6">"{item.message}"</p>
+                <p className="text-base-content/70 text-sm leading-relaxed mb-6">"{t(item.messageKey, locale)}"</p>
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white text-sm font-bold">
-                    {item.name[0]}
+                    {t(item.nameKey, locale)[0]}
                   </div>
                   <div>
-                    <p className="font-semibold text-sm">{item.name}</p>
-                    <p className="text-xs text-base-content/50">{item.role}</p>
+                    <p className="font-semibold text-sm">{t(item.nameKey, locale)}</p>
+                    <p className="text-xs text-base-content/50">{t(item.roleKey, locale)}</p>
                   </div>
                 </div>
               </div>

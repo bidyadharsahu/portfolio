@@ -260,11 +260,11 @@ export default function CalendarPage() {
 
             {/* Legend */}
             <div className="flex flex-wrap gap-4 mt-6 text-xs">
-              <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 bg-orange-500 rounded-full"></span> 🪔 Hindu Festival</span>
-              <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 bg-purple-500 rounded-full"></span> Meditation</span>
-              <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 bg-red-500 rounded-full"></span> Livestream</span>
-              <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 bg-blue-500 rounded-full"></span> Meeting</span>
-              <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 bg-emerald-500 rounded-full"></span> Deadline</span>
+              <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 bg-orange-500 rounded-full"></span> 🪩 {t('calendar.legend.festival', locale)}</span>
+              <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 bg-purple-500 rounded-full"></span> {t('calendar.legend.meditation', locale)}</span>
+              <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 bg-red-500 rounded-full"></span> {t('calendar.legend.livestream', locale)}</span>
+              <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 bg-blue-500 rounded-full"></span> {t('calendar.legend.meeting', locale)}</span>
+              <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 bg-emerald-500 rounded-full"></span> {t('calendar.legend.deadline', locale)}</span>
             </div>
           </div>
 
@@ -296,7 +296,7 @@ export default function CalendarPage() {
                         <Clock className="w-3 h-3" /> {event.time}
                       </p>
                     )}
-                    <span className={`text-xs px-2 py-0.5 rounded-full mt-1 inline-block capitalize ${event.type === 'festival' ? 'bg-orange-500/10 text-orange-600' : 'bg-base-200'}`}>{event.type === 'festival' ? '🪔 Festival' : event.type}</span>
+                    <span className={`text-xs px-2 py-0.5 rounded-full mt-1 inline-block capitalize ${event.type === 'festival' ? 'bg-orange-500/10 text-orange-600' : 'bg-base-200'}`}>{event.type === 'festival' ? `🪩 ${t('calendar.eventType.festival', locale)}` : event.type}</span>
                   </div>
                 </div>
               ))
