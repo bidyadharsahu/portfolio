@@ -50,13 +50,13 @@ export default function FeedbackPage() {
   useEffect(() => {
     const supabase = createClient();
 
-    supabase.from('feedback').select('*').order('created_at', { ascending: false }).limit(20).then(({ data }) => {
+    supabase.from('feedback').select('*').order('created_at', { ascending: false }).limit(20).then(({ data }: { data: any }) => {
       if (data) setFeedbackList(data);
     });
 
     const channel = supabase.channel('feedback-realtime').on(
       'postgres_changes', { event: 'INSERT', schema: 'public', table: 'feedback' },
-      (payload) => {
+      (payload: any) => {
         setFeedbackList((prev) => [payload.new, ...prev].slice(0, 20));
       }
     ).subscribe();
