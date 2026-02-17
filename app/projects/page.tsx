@@ -67,6 +67,7 @@ export default function ProjectsPage() {
   const { locale } = useAppStore();
   const [filter, setFilter] = useState('All');
   const [previewProject, setPreviewProject] = useState<typeof allProjects[0] | null>(null);
+  const [showLivePreview, setShowLivePreview] = useState(false);
 
   const filtered = filter === 'All' ? allProjects : allProjects.filter((p) => p.category === filter);
 
@@ -147,53 +148,93 @@ export default function ProjectsPage() {
 
       {/* Project Detail Modal */}
       {previewProject && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4" onClick={() => setPreviewProject(null)}>
-          <div className="bg-base-100 rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl" onClick={(e) => e.stopPropagation()}>
-            <div className={`h-48 bg-gradient-to-br ${previewProject.color} flex items-center justify-center relative`}>
-              <div className="text-white/80">{previewProject.icon}</div>
-              <button onClick={() => setPreviewProject(null)} className="absolute top-4 right-4 btn btn-circle btn-sm bg-white/20 text-white border-0 hover:bg-white/30">
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-            <div className="p-8 space-y-6">
-              <div>
-                <span className="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full font-medium">{previewProject.category}</span>
-                <h2 className="text-2xl font-bold mt-3">{previewProject.title}</h2>
-              </div>
-              <p className="text-base-content/70 leading-relaxed">{previewProject.description}</p>
-
-              <div>
-                <h4 className="font-semibold mb-3">Key Features</h4>
-                <ul className="space-y-2">
-                  {previewProject.features.map((f, i) => (
-                    <li key={i} className="flex items-start gap-2 text-sm text-base-content/70">
-                      <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0"></span>
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div>
-                <h4 className="font-semibold mb-3">Tech Stack</h4>
-                <div className="flex flex-wrap gap-2">
-                  {previewProject.tech.map((t) => (
-                    <span key={t} className="px-3 py-1.5 bg-base-200 rounded-lg text-sm">{t}</span>
-                  ))}
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4" onClick={() => { setPreviewProject(null); setShowLivePreview(false); }}>
+          <div className={`bg-base-100 rounded-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl ${showLivePreview ? 'max-w-6xl' : 'max-w-3xl'}`} onClick={(e) => e.stopPropagation()}>
+            {showLivePreview ? (
+              <>
+                <div className="flex items-center justify-between p-4 border-b border-base-300">
+                  <div className="flex items-center gap-3">
+                    <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${previewProject.color} flex items-center justify-center text-white`}>
+                      {previewProject.icon}
+                    </div>
+                    <div>
+                      <h3 className="font-bold">{previewProject.title}</h3>
+                      <p className="text-xs text-base-content/60">{previewProject.live_url}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <button onClick={() => setShowLivePreview(false)} className="btn btn-ghost btn-sm">
+                      Back to Details
+                    </button>
+                    <a href={previewProject.live_url} target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-sm text-white gap-1">
+                      <ExternalLink className="w-3.5 h-3.5" /> Open Full Site
+                    </a>
+                    <button onClick={() => { setPreviewProject(null); setShowLivePreview(false); }} className="btn btn-circle btn-sm btn-ghost">
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
-              </div>
+                <div className="relative bg-base-200 w-full" style={{ height: '70vh' }}>
+                  <iframe
+                    src={previewProject.live_url}
+                    className="w-full h-full border-0 rounded-b-2xl"
+                    title={`${previewProject.title} Preview`}
+                    sandbox="allow-scripts allow-same-origin allow-forms"
+                  />
+                </div>
+              </>
+            ) : (
+              <>
+                <div className={`h-48 bg-gradient-to-br ${previewProject.color} flex items-center justify-center relative`}>
+                  <div className="text-white/80">{previewProject.icon}</div>
+                  <button onClick={() => { setPreviewProject(null); setShowLivePreview(false); }} className="absolute top-4 right-4 btn btn-circle btn-sm bg-white/20 text-white border-0 hover:bg-white/30">
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+                <div className="p-8 space-y-6">
+                  <div>
+                    <span className="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full font-medium">{previewProject.category}</span>
+                    <h2 className="text-2xl font-bold mt-3">{previewProject.title}</h2>
+                  </div>
+                  <p className="text-base-content/70 leading-relaxed">{previewProject.description}</p>
 
-              <div className="flex gap-3 pt-4 border-t border-base-300">
-                <a href={previewProject.live_url} target="_blank" rel="noopener noreferrer" className="btn btn-primary text-white gap-2 flex-1">
-                  <ExternalLink className="w-4 h-4" /> View Live Project
-                </a>
-                {previewProject.github_url && (
-                  <a href={previewProject.github_url} target="_blank" rel="noopener noreferrer" className="btn btn-outline gap-2 flex-1">
-                    <Github className="w-4 h-4" /> View Source Code
-                  </a>
-                )}
-              </div>
-            </div>
+                  <div>
+                    <h4 className="font-semibold mb-3">Key Features</h4>
+                    <ul className="space-y-2">
+                      {previewProject.features.map((f, i) => (
+                        <li key={i} className="flex items-start gap-2 text-sm text-base-content/70">
+                          <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0"></span>
+                          {f}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h4 className="font-semibold mb-3">Tech Stack</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {previewProject.tech.map((t) => (
+                        <span key={t} className="px-3 py-1.5 bg-base-200 rounded-lg text-sm">{t}</span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-base-300">
+                    <button onClick={() => setShowLivePreview(true)} className="btn btn-secondary gap-2 flex-1">
+                      <Eye className="w-4 h-4" /> {t('projects.preview', locale)}
+                    </button>
+                    <a href={previewProject.live_url} target="_blank" rel="noopener noreferrer" className="btn btn-primary text-white gap-2 flex-1">
+                      <ExternalLink className="w-4 h-4" /> {t('projects.viewLive', locale)}
+                    </a>
+                    {previewProject.github_url && (
+                      <a href={previewProject.github_url} target="_blank" rel="noopener noreferrer" className="btn btn-outline gap-2 flex-1">
+                        <Github className="w-4 h-4" /> {t('projects.viewCode', locale)}
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         </div>
       )}

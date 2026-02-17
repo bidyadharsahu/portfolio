@@ -55,7 +55,7 @@ export default function DonatePage() {
     // Realtime subscription
     const channel = supabase
       .channel('donations-realtime')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'donations' }, (payload) => {
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'donations' }, (payload: { eventType: string; new: Donation; old: Donation }) => {
         if (payload.eventType === 'INSERT') {
           setRecentDonations((prev) => [payload.new as Donation, ...prev].slice(0, 10));
           setTotalRaised((prev) => prev + ((payload.new as Donation).amount || 0));

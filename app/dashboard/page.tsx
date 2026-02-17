@@ -45,24 +45,24 @@ export default function AdminDashboard() {
     const supabase = createClient();
 
     // Fetch donations
-    supabase.from('donations').select('*').order('created_at', { ascending: false }).then(({ data }) => {
+    supabase.from('donations').select('*').order('created_at', { ascending: false }).then(({ data }: { data: any }) => {
       if (data) setDonations(data);
     });
 
     // Fetch feedback
-    supabase.from('feedback').select('*').order('created_at', { ascending: false }).then(({ data }) => {
+    supabase.from('feedback').select('*').order('created_at', { ascending: false }).then(({ data }: { data: any }) => {
       if (data) setFeedbackData(data);
     });
 
     // Fetch customers
-    supabase.from('users').select('*').neq('role', 'admin').order('created_at', { ascending: false }).then(({ data }) => {
+    supabase.from('users').select('*').neq('role', 'admin').order('created_at', { ascending: false }).then(({ data }: { data: any }) => {
       if (data && data.length > 0) setCustomers(data);
     });
 
     // Realtime: donations
     const donCh = supabase.channel('admin-donations').on(
       'postgres_changes', { event: '*', schema: 'public', table: 'donations' },
-      (payload) => {
+      (payload: any) => {
         if (payload.eventType === 'INSERT') {
           setDonations((prev) => [payload.new, ...prev]);
           toast.success(`New donation: ₹${(payload.new as any).amount} from ${(payload.new as any).donor_name}`);
@@ -75,7 +75,7 @@ export default function AdminDashboard() {
     // Realtime: feedback
     const fbCh = supabase.channel('admin-feedback').on(
       'postgres_changes', { event: '*', schema: 'public', table: 'feedback' },
-      (payload) => {
+      (payload: any) => {
         if (payload.eventType === 'INSERT') {
           setFeedbackData((prev) => [payload.new, ...prev]);
           toast.success(`New feedback from ${(payload.new as any).name}`);
@@ -86,7 +86,7 @@ export default function AdminDashboard() {
     // Realtime: users
     const userCh = supabase.channel('admin-users').on(
       'postgres_changes', { event: '*', schema: 'public', table: 'users' },
-      (payload) => {
+      (payload: any) => {
         if (payload.eventType === 'INSERT') {
           setCustomers((prev) => [payload.new, ...prev]);
           toast.success(`New user registered: ${(payload.new as any).full_name || (payload.new as any).username}`);

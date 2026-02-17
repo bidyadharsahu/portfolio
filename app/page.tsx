@@ -38,15 +38,6 @@ const featuredProjects = [
   },
 ];
 
-const services = [
-  { icon: <Code2 className="w-6 h-6" />, title: 'Web Development', desc: 'Modern, responsive web applications using React, Next.js, and cutting-edge frameworks.' },
-  { icon: <Blocks className="w-6 h-6" />, title: 'Blockchain & Web3', desc: 'Smart contracts, DApps, and decentralized solutions on Ethereum and beyond.' },
-  { icon: <Glasses className="w-6 h-6" />, title: 'AR/VR Solutions', desc: 'Immersive augmented and virtual reality experiences for mobile and web.' },
-  { icon: <Cloud className="w-6 h-6" />, title: 'Cloud Architecture', desc: 'Scalable cloud solutions using AWS Lambda, DynamoDB, Amplify, and more.' },
-  { icon: <Shield className="w-6 h-6" />, title: 'Security Audits', desc: 'Smart contract audits and security best practices for blockchain projects.' },
-  { icon: <Globe className="w-6 h-6" />, title: 'Freelance Consulting', desc: 'End-to-end project consulting, from ideation to deployment and beyond.' },
-];
-
 const stats = [
   { number: '15+', label: 'Projects Delivered' },
   { number: '10+', label: 'Happy Clients' },
@@ -75,9 +66,9 @@ export default function Home() {
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
-          <div className="grid lg:grid-cols-[1fr_auto] gap-4 items-center">
+          <div className="flex flex-col-reverse lg:grid lg:grid-cols-[1fr_auto] gap-8 items-center">
             {/* Left content */}
-            <div className="space-y-8 animate-fade-in-up">
+            <div className="space-y-8 animate-fade-in-up text-center lg:text-left">
               <div className="space-y-4">
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight">
                   {t('hero.greeting', locale)}{' '}
@@ -88,7 +79,7 @@ export default function Home() {
                 <p className="text-base text-base-content/50 max-w-lg leading-relaxed">{t('hero.subtitle', locale)}</p>
               </div>
 
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-wrap gap-3 justify-center lg:justify-start">
                 <Link href="/projects" className="btn btn-primary text-white gap-2 shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-shadow">
                   {t('hero.cta.projects', locale)} <ArrowRight className="w-4 h-4" />
                 </Link>
@@ -101,7 +92,7 @@ export default function Home() {
               </div>
 
               {/* Tech stack pills */}
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2 justify-center lg:justify-start">
                 {['React', 'Next.js', 'AWS', 'Python', 'Node.js', 'TypeScript', 'Docker'].map((tech) => (
                   <span key={tech} className="px-3 py-1 text-xs font-medium bg-base-200/80 text-base-content/60 rounded-full border border-base-300/50">
                     {tech}
@@ -186,19 +177,26 @@ export default function Home() {
       <section className="py-20 bg-base-200/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 space-y-4">
-            <h2 className="text-3xl sm:text-4xl font-bold">What I Do</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold">{t('services.title', locale)}</h2>
             <div className="section-divider"></div>
-            <p className="text-base-content/60 max-w-2xl mx-auto">From concept to deployment, I offer end-to-end development services</p>
+            <p className="text-base-content/60 max-w-2xl mx-auto">{t('services.subtitle', locale)}</p>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {services.map((service, i) => (
+            {[
+              { icon: <Code2 className="w-6 h-6" />, key: 'webdev' },
+              { icon: <Blocks className="w-6 h-6" />, key: 'blockchain' },
+              { icon: <Glasses className="w-6 h-6" />, key: 'arvr' },
+              { icon: <Cloud className="w-6 h-6" />, key: 'cloud' },
+              { icon: <Shield className="w-6 h-6" />, key: 'security' },
+              { icon: <Globe className="w-6 h-6" />, key: 'consulting' },
+            ].map((service, i) => (
               <div key={i} className="glass-card p-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
                 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-4 group-hover:bg-primary group-hover:text-white transition-colors">
                   {service.icon}
                 </div>
-                <h3 className="text-lg font-semibold mb-2">{service.title}</h3>
-                <p className="text-sm text-base-content/60 leading-relaxed">{service.desc}</p>
+                <h3 className="text-lg font-semibold mb-2">{t(`services.${service.key}.title`, locale)}</h3>
+                <p className="text-sm text-base-content/60">{t(`services.${service.key}.desc`, locale)}</p>
               </div>
             ))}
           </div>
@@ -245,14 +243,14 @@ export default function Home() {
           <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '40px 40px' }}></div>
         </div>
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">Ready to Build Something Amazing?</h2>
-          <p className="text-white/70 mb-8 max-w-2xl mx-auto">Whether you need a blockchain solution, an AR experience, or a full-stack app,  I'm here to help bring your vision to life.</p>
+          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">{t('cta.title', locale)}</h2>
+          <p className="text-white/70 mb-8 max-w-2xl mx-auto">{t('cta.subtitle', locale)}</p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link href="/login" className="btn bg-white text-primary hover:bg-white/90 gap-2 shadow-lg">
-              Start a Project <ArrowRight className="w-4 h-4" />
+              {t('cta.startProject', locale)} <ArrowRight className="w-4 h-4" />
             </Link>
             <Link href="/calendar" className="btn btn-outline border-white text-white hover:bg-white/10 gap-2">
-              Schedule a Meeting <Calendar className="w-4 h-4" />
+              {t('cta.scheduleMeeting', locale)} <Calendar className="w-4 h-4" />
             </Link>
           </div>
         </div>
@@ -263,10 +261,10 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { href: '/meditation', icon: <Play className="w-6 h-6" />, title: t('nav.meditation', locale), desc: 'Join guided sessions for inner peace', color: 'from-purple-500 to-indigo-500' },
-              { href: '/livestream', icon: <Globe className="w-6 h-6" />, title: t('nav.livestream', locale), desc: 'Watch live coding & tech talks', color: 'from-red-500 to-rose-500' },
-              { href: '/calendar', icon: <Calendar className="w-6 h-6" />, title: t('nav.calendar', locale), desc: 'View events & schedule meetings', color: 'from-blue-500 to-cyan-500' },
-              { href: '/feedback', icon: <Users className="w-6 h-6" />, title: t('nav.feedback', locale), desc: 'Share your experience & rate my work', color: 'from-emerald-500 to-green-500' },
+              { href: '/meditation', icon: <Play className="w-6 h-6" />, title: t('nav.meditation', locale), desc: t('quicklinks.meditation.desc', locale), color: 'from-purple-500 to-indigo-500' },
+              { href: '/livestream', icon: <Globe className="w-6 h-6" />, title: t('nav.livestream', locale), desc: t('quicklinks.livestream.desc', locale), color: 'from-red-500 to-rose-500' },
+              { href: '/calendar', icon: <Calendar className="w-6 h-6" />, title: t('nav.calendar', locale), desc: t('quicklinks.calendar.desc', locale), color: 'from-blue-500 to-cyan-500' },
+              { href: '/feedback', icon: <Users className="w-6 h-6" />, title: t('nav.feedback', locale), desc: t('quicklinks.feedback.desc', locale), color: 'from-emerald-500 to-green-500' },
             ].map((item, i) => (
               <Link key={i} href={item.href} className="group glass-card p-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                 <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${item.color} flex items-center justify-center text-white mb-4 group-hover:scale-110 transition-transform`}>
