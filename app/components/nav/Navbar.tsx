@@ -48,7 +48,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           <Link href="/" className="flex items-center gap-2 group" onClick={() => setMenuOpen(false)}>
             <span className="font-bold text-xl group-hover:scale-105 transition-transform">
-              <span className="text-primary">Bidyadhar</span><span className="text-base-content/50">.tech</span>
+              <span className="text-primary">Bidyadhar</span><span className="text-base-content/50">.me</span>
             </span>
           </Link>
 
