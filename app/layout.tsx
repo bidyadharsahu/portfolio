@@ -21,8 +21,8 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Bidyadhar Sahu | Full-Stack Developer & Blockchain Enthusiast",
-  description: "Portfolio of Bidyadhar Sahu — Full-Stack Developer, Blockchain Enthusiast, and Freelancer from Odisha, India. Explore projects, join meditation classes, and more.",
+  title: "Bidyadhar Sahu | Cloud Developer & Blockchain Enthusiast",
+  description: "Portfolio of Bidyadhar Sahu — Cloud Developer, Blockchain Enthusiast, and Freelancer from Odisha, India. Explore projects, join meditation classes, and more.",
   keywords: ["Bidyadhar Sahu", "portfolio", "developer", "blockchain", "freelancer", "Odisha", "India", "web3", "AR"],
 };
 
