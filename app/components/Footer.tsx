@@ -19,7 +19,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <span className="font-bold text-xl"><span className="text-primary">Bidyadhar</span>.tech</span>
+              <span className="font-bold text-xl"><span className="text-primary">Bidyadhar</span>.me</span>
             </div>
             <p className="text-neutral-content/60 text-sm leading-relaxed">{t('footer.bio', locale)}</p>
             <div className="flex gap-3">
